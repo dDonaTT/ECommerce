@@ -31,3 +31,19 @@ Route::prefix('category')->group(function(){
 
     Route::get('/delete/{id}',[CategoryController::class, 'DeleteCategory'])->name('category.delete');
 });
+
+Route::prefix('subcategory')->group(function(){
+
+    Route::get('/all',[CategoryController::class, 'GetAllSubCategory'])->name('all.subcategory');
+    
+    Route::get('/add',[CategoryController::class, 'AddSubCategory'])->name('add.subcategory');
+    
+    Route::post('/store',[CategoryController::class, 'StoreSubCategory'])->name('subcategory.store');
+    
+    Route::get('/edit/{id}',[CategoryController::class, 'EditSubCategory'])->name('subcategory.edit');
+    
+    Route::post('/update',[CategoryController::class, 'UpdateSubCategory'])->name('subcategory.update');
+     
+    Route::get('/delete/{id}',[CategoryController::class, 'DeleteSubCategory'])->name('subcategory.delete');
+    });
+    
