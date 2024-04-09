@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,3 +48,19 @@ Route::prefix('subcategory')->group(function(){
     Route::get('/delete/{id}',[CategoryController::class, 'DeleteSubCategory'])->name('subcategory.delete');
     });
     
+    Route::prefix('user')->group(function(){
+
+        Route::get('/all',[UserController::class, 'GetAllUser'])->name('all.user');
+    
+        Route::get('/add',[UserController::class, 'AddUser'])->name('add.user');
+    
+        Route::post('/store',[UserController::class, 'StoreUser'])->name('user.store');
+    
+        Route::get('/edit/{id}',[UserController::class, 'EditUser'])->name('user.edit');
+    
+        Route::post('/update/{id}', [UserController::class, 'UpdateUser'])->name('user.update');
+    
+        Route::get('/delete/{id}',[UserController::class, 'DeleteUser'])->name('user.delete');
+
+
+    });
