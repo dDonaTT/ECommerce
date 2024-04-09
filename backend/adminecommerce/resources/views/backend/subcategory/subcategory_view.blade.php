@@ -3,8 +3,8 @@
 
 <div class="page-wrapper">
 			<div class="page-content">
-			 
-				 
+
+
 
 <div class="card radius-10">
 						<div class="card-body">
@@ -22,26 +22,26 @@
 			<tr>
 				<th>SL</th>
 				<th>Category Name </th>
-				<th>SubCategory Name </th>				 
+				<th>SubCategory Name </th>
 				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			@php($i = 1)
-			@foreach($subcategory as $item)
+			@foreach($sub_categories as $item)
 			<tr>
 				<td>{{ $i++ }}</td>
-		 <td>{{ $item->category_name }}</td> 
-		 <td>{{ $item->subcategory_name }}</td>		 
-				 
+		 <td>{{ $item->category_name }}</td>
+		 <td>{{ $item->subcategory_name }}</td>
+
 				<td>
-	<a href="{{ route('subcategory.edit',$item->id) }}" class="btn btn-info" >Edit </a>	
-	<a href="{{ route('subcategory.delete',$item->id) }}" class="btn btn-danger" id="delete" >Delete </a>				
-					 
+	<a href="{{ route('subcategory.edit',$item->id) }}" class="btn btn-info" >Edit </a>
+	<a href="{{ route('subcategory.delete',$item->id) }}" class="btn btn-danger" id="delete" >Delete </a>
+
 				</td>
 			</tr>
 			@endforeach
-			 
+
 		</tbody>
 	</table>
 </div>
@@ -53,5 +53,5 @@
 
 			</div>
 		</div>
- 
+
 @endsection
