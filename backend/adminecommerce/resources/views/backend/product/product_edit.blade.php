@@ -28,7 +28,7 @@
 	  <hr>
        <div class="form-body mt-4">
 
-<form method="post" action="{{ route('product.store') }}" enctype="multipart/form-data">
+<form  method="post" action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data">
 	 @csrf
 
 
@@ -112,8 +112,8 @@
 
 
 	  <div class="col-md-6">
-		<label for="inputCompareatprice" class="form-label">Special Price</label>
-		<input type="text" name="special_price" class="form-control" id="inputCompareatprice" value="{{ $product->special_price }}">
+		<label for="inputCompareatprice" class="form-label">Discount Price</label>
+		<input type="text" name="discount_price" class="form-control" id="inputCompareatprice" value="{{ $product->discount_price }}">
 	  </div>
 
 

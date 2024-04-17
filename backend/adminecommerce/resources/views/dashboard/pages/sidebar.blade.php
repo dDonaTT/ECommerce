@@ -1,12 +1,33 @@
-<div class="sidebar-wrapper" data-simplebar="true">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15+Charted&family=Lilita+One&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <style>
+        .lilita-one-regular {
+        font-family: "Lilita One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar-wrapper" data-simplebar="true">
 			<div class="sidebar-header">
 				<div>
-					<img src="{{ asset('admin/assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
+					<img src="{{ asset('admin/assets/images/flash-card.png') }}" class="logo-icon" alt="logo icon">
 				</div>
 				<div>
-					<h4 class="logo-text">Easy Shop</h4>
+					<h4 class="logo-text lilita-one-regular"
+                    style="color: #F29F38;">Snap Buy</h4>
 				</div>
-				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
+				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left' style="color: #F29F38;"></i>
 				</div>
 			</div>
 			<!--navigation-->
@@ -162,3 +183,11 @@
 			</ul>
 			<!--end navigation-->
 		</div>
+</body>
+</html>
+
+
+
+
+
+

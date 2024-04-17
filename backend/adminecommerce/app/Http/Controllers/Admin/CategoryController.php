@@ -47,6 +47,14 @@ class CategoryController extends Controller
 
     public function StoreCategory(Request $request){
 
+        $request->validate([
+            'category_name' => 'required',
+            'category_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'category_name.required' => 'Category name is required',
+            'category_image.required' => 'Category image is required',
+        ]);
+
         if($request->file('category_image')){
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$request->file('category_image')->getClientOriginalExtension();
@@ -80,6 +88,14 @@ class CategoryController extends Controller
     }
 
     public function UpdateCategory(Request $request){
+
+        $request->validate([
+            'category_name' => 'required',
+            'category_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'category_name.required' => 'Category name is required',
+            'category_image.required' => 'Category image is required',
+        ]);
 
         $category_id = $request->id;
 

@@ -15,18 +15,22 @@
                 <form method="POST" action="{{ route('category.update') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <input type="hidden" name="id" value="{{ $category-> id }}">
+                    <input type="hidden" name="id" value="{{ $category->id }}">
 
                     <div class="mb-3">
                         <label for="categoryName" class="form-label">Category Name:</label>
                         <input type="text" class="form-control" id="categoryName" name="category_name" value="{{ $category->category_name }}">
-                        @error('category_name')
-                        <span class="text-danger">{{ $message }}</span>
+                        @if($errors->has('category_name') && $errors->first('category_name') === "Category name is required")
+                            <span class="text-danger">Category name cannot be null.</span>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="categoryImage" class="form-label">Category Image:</label>
                         <input type="file" class="form-control" id="categoryImage" name="category_image">
+                        <!-- Display error message if category image is null -->
+                        @if($errors->has('category_image') && $errors->first('category_image') === "Category image is required")
+                            <span class="text-danger">Category image cannot be null.</span>
+                        @enderror
                         <hr>
                     </div>
                     <div class="mb-3">

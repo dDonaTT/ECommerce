@@ -71,11 +71,13 @@ Route::prefix('subcategory')->group(function(){
 
         Route::get('/add',[ProductListController::class, 'AddProduct'])->name('add.product');
 
-        Route::post('/store',[ProductListController::class, 'StorProduct'])->name('product.store');
+        Route::post('/store',[ProductListController::class, 'StoreProduct'])->name('product.store');
 
         Route::get('/edit/{id}',[ProductListController::class, 'EditProduct'])->name('product.edit');
 
         Route::post('/update/{id}', [UserController::class, 'UpdateUser'])->name('user.update');
+
+        Route::post('/update/{id}', [ProductListController::class, 'UpdateProduct'])->name('product.update');
 
         Route::get('/delete/{id}',[ProductListController::class, 'DeleteProduct'])->name('product.delete');
 
