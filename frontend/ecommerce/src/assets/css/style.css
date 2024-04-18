@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
 @import "button.css";
 @import "card.css";
 @import "font.css";
 @import "footer.css";
 @import "menu.css";
 @import "navMenu.css";
-@import "slider.css";
+@import "megaMenu.css";
+@import "bigSlider.css";
+@import "navMenuDesktop.css";
 
 /*  */
