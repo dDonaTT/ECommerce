@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react'
-import FeaturedProducts from '../components/home/FeaturedProducts'
-import Category from '../components/home/Category'
-import Footer from '../components/common/Footer'
-
-
+import React, { Component, Fragment } from "react";
+import FeaturedProducts from "../components/home/FeaturedProducts";
+import Category from "../components/home/Category";
+import Collection from "../components/home/Collection";
+import NewArrival from "../components/home/NewArrival";
+import HomeTop from "../components/home/HomeTop";
+import NavMenuDesktop from "../components/common/NavMenuDesktop";
 
 class HomePage extends Component {
   componentDidMount(){
@@ -12,14 +13,12 @@ class HomePage extends Component {
   render() {
     return (
       <Fragment>
-         
         <FeaturedProducts />
         <Category/>
          {/* <h2>This is home page</h2> */}
-        <Footer/>
       </Fragment>
-    )
+    );
   }
 }
 
-export default HomePage
+export default HomePage;
