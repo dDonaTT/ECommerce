@@ -7,15 +7,15 @@ import HomeTop from "../components/home/HomeTop";
 import NavMenuDesktop from "../components/common/NavMenuDesktop";
 
 class HomePage extends Component {
-  componentDidMount(){
-    window.scroll(0,0)
-}
   render() {
     return (
       <Fragment>
+        <NavMenuDesktop />
+        <HomeTop />
         <FeaturedProducts />
-        <Category/>
-         {/* <h2>This is home page</h2> */}
+        <NewArrival />
+        <Category />
+        <Collection />
       </Fragment>
     );
   }
