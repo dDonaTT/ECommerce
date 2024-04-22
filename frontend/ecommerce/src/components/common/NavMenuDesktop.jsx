@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Navbar, Container, Row, Col, Button } from "react-bootstrap";
-import Logo from "../../assets/images/easyshop.png";
+import Logo from "../../assets/images/flash-card.png";
 import { Link } from "react-router-dom";
 
 class NavMenuDesktop extends Component {
@@ -15,9 +15,26 @@ class NavMenuDesktop extends Component {
             >
               <Row>
                 <Col lg={4} md={4} sm={12} xs={12}>
-                  <Link to="/">
-                    <img className="nav-logo" src={Logo} />
-                  </Link>
+                <Link to="/" style={{ textDecoration: "none" }}>
+  <img
+    className="nav-logo"
+    src={Logo}
+    style={{ display: "inline-block", marginRight: "5px" }}
+  />
+  <h4
+    className="logo-text lilita-one-regular"
+    style={{
+      color: "#F29F38",
+      textDecoration: "none",
+      display: "inline",
+      fontWeight: "bold",
+      fontSize: "30px"
+    }}
+  >
+    Snap <span style={{ color: '#E07728' }}>Buy</span>
+  </h4>
+</Link>
+
                 </Col>
 
                 <Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
@@ -39,9 +56,8 @@ class NavMenuDesktop extends Component {
                   <a className="btn">
                     <i className="fa h4 fa-mobile-alt"></i>
                   </a>
-                  <Link to="/" className="h4 btn">
-                    LOGIN
-                  </Link>
+                  <Link to="/login" className="h4 btn">LOGIN</Link>
+                   {/* <Link to="/register" className="h4 btn">REGISTER</Link> */}
 
                   <Button className="cart-btn">
                     <i className="fa fa-shopping-cart"></i> 3 Items

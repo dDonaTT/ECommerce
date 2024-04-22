@@ -9,6 +9,7 @@ import RefundPage from '../pages/RefundPage';
 import ProductDetailsPage from '../pages/ProductDetailsPage';
 import NotificationPage from "../pages/NotificationPage";
 import FavouritePage from "../pages/FavoritePage";
+import RegisterPage from "../pages/RegisterPage";
 
 class AppRoute extends Component {
   render() {
@@ -18,6 +19,9 @@ class AppRoute extends Component {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="login" element={<UserLoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+
+
             <Route path="contact" element={<ContactPage />} />
 
             <Route  path="/purchase" element={<PurchasePage/>} />

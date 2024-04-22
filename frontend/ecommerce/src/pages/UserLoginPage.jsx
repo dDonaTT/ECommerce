@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Footer from "../components/common/Footer"
 import UserLogin from '../components/common/UserLogin'
+import NavMenuDesktop from '../components/common/NavMenuDesktop'
 
 
 class UserLoginPage extends Component {
@@ -12,6 +13,7 @@ class UserLoginPage extends Component {
     render() {
          return (
              <Fragment>
+                <NavMenuDesktop /> 
               
                  
 

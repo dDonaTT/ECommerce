@@ -4,10 +4,14 @@ import Product1 from '../../assets/images/product/product1.png'
 import Product2 from '../../assets/images/product/product2.png'
 import Product3 from '../../assets/images/product/product3.png'
 import Product4 from '../../assets/images/product/product4.png'
+import NavMenuDesktop from "../../components/common/NavMenuDesktop";
+
 class ProductDetails extends Component {
      render() {
           return (
                <Fragment>
+        <NavMenuDesktop />
+
                <Container fluid={true}  className="BetweenTwoSection">
                    <Row className="p-2">
 <Col className="shadow-sm bg-white pb-3 mt-4" md={12} lg={12} sm={12} xs={12}>
