@@ -4,7 +4,71 @@ import Logo from "../../assets/images/flash-card.png";
 import { Link } from "react-router-dom";
 
 class NavMenuDesktop extends Component {
+  logout = () => {
+    localStorage.clear();
+  };
+
   render() {
+    let buttons;
+    if (localStorage.getItem("token")) {
+      buttons = (
+        <div>
+          <Link to="/favourite" className="btn">
+            <i className="fa h4 fa-heart"></i>
+            <sup>
+              <span className="badge text-white bg-danger">3</span>
+            </sup>
+          </Link>
+
+          <Link to="/notification" className="btn">
+            <i className="fa h4 fa-bell"></i>
+            <sup>
+              <span className="badge text-white bg-danger">5</span>
+            </sup>
+          </Link>
+
+          <Link to="/profile" className="h4 btn">
+            PROFILE
+          </Link>
+          <Link to="/" onClick={this.logout} className="h4 btn">
+            LOGOUT
+          </Link>
+
+          <Link to="/cart" className="cart-btn">
+            <i className="fa fa-shopping-cart"></i> 3 Items{" "}
+          </Link>
+        </div>
+      );
+    } else {
+      buttons = (
+        <div>
+          <Link to="/favourite" className="btn">
+            <i className="fa h4 fa-heart"></i>
+            <sup>
+              <span className="badge text-white bg-danger">3</span>
+            </sup>
+          </Link>
+
+          <Link to="/notification" className="btn">
+            <i className="fa h4 fa-bell"></i>
+            <sup>
+              <span className="badge text-white bg-danger">5</span>
+            </sup>
+          </Link>
+
+          <Link to="/login" className="h4 btn">
+            LOGIN
+          </Link>
+          <Link to="/register" className="h4 btn">
+            REGISTER
+          </Link>
+
+          <Link to="/cart" className="cart-btn">
+            <i className="fa fa-shopping-cart"></i> 3 Items{" "}
+          </Link>
+        </div>
+      );
+    }
     return (
       <Fragment>
         <div className="TopSectionDown">
@@ -15,26 +79,25 @@ class NavMenuDesktop extends Component {
             >
               <Row>
                 <Col lg={4} md={4} sm={12} xs={12}>
-                <Link to="/" style={{ textDecoration: "none" }}>
-  <img
-    className="nav-logo"
-    src={Logo}
-    style={{ display: "inline-block", marginRight: "5px" }}
-  />
-  <h4
-    className="logo-text lilita-one-regular"
-    style={{
-      color: "#F29F38",
-      textDecoration: "none",
-      display: "inline",
-      fontWeight: "bold",
-      fontSize: "30px"
-    }}
-  >
-    Snap <span style={{ color: '#E07728' }}>Buy</span>
-  </h4>
-</Link>
-
+                  <Link to="/" style={{ textDecoration: "none" }}>
+                    <img
+                      className="nav-logo"
+                      src={Logo}
+                      style={{ display: "inline-block", marginRight: "5px" }}
+                    />
+                    <h4
+                      className="logo-text lilita-one-regular"
+                      style={{
+                        color: "#F29F38",
+                        textDecoration: "none",
+                        display: "inline",
+                        fontWeight: "bold",
+                        fontSize: "30px",
+                      }}
+                    >
+                      Snap <span style={{ color: "#E07728" }}>Buy</span>
+                    </h4>
+                  </Link>
                 </Col>
 
                 <Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
@@ -47,21 +110,7 @@ class NavMenuDesktop extends Component {
                 </Col>
 
                 <Col className="p-1 mt-1" lg={4} md={4} sm={12} xs={12}>
-                  <Link to="/" className="btn">
-                    <i className="fa h4 fa-bell"></i>
-                    <sup>
-                      <span className="badge text-white bg-danger">5</span>
-                    </sup>
-                  </Link>
-                  <a className="btn">
-                    <i className="fa h4 fa-mobile-alt"></i>
-                  </a>
-                  <Link to="/login" className="h4 btn">LOGIN</Link>
-                   {/* <Link to="/register" className="h4 btn">REGISTER</Link> */}
-
-                  <Button className="cart-btn">
-                    <i className="fa fa-shopping-cart"></i> 3 Items
-                  </Button>
+                  {buttons}
                 </Col>
               </Row>
             </Container>

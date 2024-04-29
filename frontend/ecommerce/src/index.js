@@ -7,6 +7,10 @@ import "./assets/css/fontawesome.css";
 import "./assets/css/animate.min.css";
 
 import "./assets/css/style.css";
+import axios from "axios";
+
+axios.defaults.headers.common["Authorization"] =
+  "Bearer " + localStorage.getItem("token");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,5 +18,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-

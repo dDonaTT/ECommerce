@@ -3,14 +3,41 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\UserController;
+// use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductListController;
 use App\Http\Controllers\Admin\ProductDetailsController;
 
+use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\ForgetController;
+use App\Http\Controllers\User\ResetController;
+use App\Http\Controllers\User\UserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+
+ /////////////// User Login API Start ////////////////////////
+
+ // Login Routes 
+ Route::post('/login',[AuthController::class, 'Login']);
+
+ // Register Routes 
+Route::post('/register',[AuthController::class, 'Register']);
+
+ // Forget Password Routes 
+ Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
+
+ // Reset Password Routes 
+Route::post('/resetpassword',[ResetController::class, 'ResetPassword']);
+
+// Current User Route 
+Route::get('/user',[UserController::class, 'User'])->middleware('auth:api');
+
+
+ /////////////// End User Login API Start ////////////////////////
+
+
 
 //Category Route
 Route::get('/allcategory',[CategoryController::class, 'AllCategory']);
