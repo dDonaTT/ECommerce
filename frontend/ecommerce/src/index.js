@@ -5,7 +5,6 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/fontawesome.css";
 import "./assets/css/animate.min.css";
-
 import "./assets/css/style.css";
 import axios from "axios";
 

@@ -23,6 +23,7 @@ class UserLogin extends Component {
       email: this.state.email,
       password: this.state.password,
     };
+    console.log(data);
 
     axios
       .post(AppURL.UserLogin, data)
@@ -31,6 +32,7 @@ class UserLogin extends Component {
         this.setState({ loggedIn: true });
 
         this.props.setUser(response.data.user);
+        console.log(response.data.token);
       })
       .catch((error) => {});
   };

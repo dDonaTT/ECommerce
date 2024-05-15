@@ -30,3 +30,8 @@
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 600;
 }
+.poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }

@@ -11,6 +11,7 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ForgetController;
 use App\Http\Controllers\User\ResetController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\SliderController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -19,19 +20,19 @@ Route::get('/user', function (Request $request) {
 
  /////////////// User Login API Start ////////////////////////
 
- // Login Routes 
+ // Login Routes
  Route::post('/login',[AuthController::class, 'Login']);
 
- // Register Routes 
+ // Register Routes
 Route::post('/register',[AuthController::class, 'Register']);
 
- // Forget Password Routes 
+ // Forget Password Routes
  Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
 
- // Reset Password Routes 
+ // Reset Password Routes
 Route::post('/resetpassword',[ResetController::class, 'ResetPassword']);
 
-// Current User Route 
+// Current User Route
 Route::get('/user',[UserController::class, 'User'])->middleware('auth:api');
 
 
@@ -41,6 +42,9 @@ Route::get('/user',[UserController::class, 'User'])->middleware('auth:api');
 
 //Category Route
 Route::get('/allcategory',[CategoryController::class, 'AllCategory']);
+
+//Slider Route
+Route::get('/allslider',[SliderController::class, 'AllSlider']);
 
 
 //User Route

@@ -8,7 +8,7 @@ import Google from '../../assets/images/google.png'
   render() {
     return (
      <Fragment>
-      <div className="footerback m-0 mt-5 pt-3 shadow-sm"> 
+      <div className="footerback m-0 pt-3 shadow-sm poppins-medium "> 
       <Container>
       <Row className="px-0 my-5">
           <Col className="p-2" lg={3} md={3} sm={6} xs={12}>
@@ -46,10 +46,10 @@ import Google from '../../assets/images/google.png'
 
      </Row>
       </Container>
-      <Container fluid={true} className="text-center m-0 pt-3 pb-1 bg-dark">
+      <Container fluid={true} className="text-center m-0 pt-3 pb-1 shadow-sm">
                     <Container>
                          <Row>
-       <h6 className="text-white">© Copyright 2024 by easy Shop, All Rights Reserved</h6>
+       <h6 className="text-black">© Copyright 2024 by easy Shop, All Rights Reserved</h6>
                          </Row>
                     </Container>
                </Container> 

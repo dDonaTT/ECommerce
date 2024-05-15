@@ -4,6 +4,9 @@
 .slider-img {
   width: 100% !important;
   height: 380px;
+  padding: 0rem 4rem 0rem 4rem;
+  /* padding-left: 6rem; */
+  background-color: #F3F3F3;;
 }
 
 .slick-slide {

@@ -16,3 +16,260 @@
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 400;
 }
+
+
+
+.product-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  /* .product-images {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  } */
+  
+  /* .main-image {
+    width: 100%;
+    height: auto;
+  } */
+  
+  .thumbnail-images {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .thumbnail-images img {
+    width: 90px;
+    height: auto;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 5px;
+    transition: transform 0.2s;
+  }
+  
+  .thumbnail-images img:hover {
+    transform: scale(1.1);
+  }
+  
+  .product-details {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .product-name {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .product-description {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .product-review {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #00FF00;
+  }
+  
+  .product-price {
+    margin: 20px 0;
+  }
+  
+  .discount-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    margin-right: 10px;
+  }
+  
+  .original-price {
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+  
+  .product-options {
+    margin: 20px 0;
+  }
+  
+  .product-color, .product-size {
+    margin: 10px 0;
+  }
+  
+  .size-controls {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+  .size-controls:hover {
+    color: #333;
+  }
+  
+  .size-controls button {
+    padding: 0 10px;
+  }
+  
+  .product-buttons {
+    margin: 20px 0;
+  }
+  
+  .product-buttons button {
+    margin: 5px;
+  }
+
+  
+
+
+
+
+
+  /* //////////////////////////////////////////////// */
+  .labyrinth-of-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  .labyrinth-of-details:hover{
+    color: #333;
+  }
+  .product-details:hover {
+    color: #333;
+  }
+  .product-details h1:hover {
+    color: #333;
+  }
+  .product-details h6:hover {
+    color: #333;
+  }
+  
+  .product-images {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .main-image {
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 600px;
+    height: auto;
+  }
+  
+  
+  .product-details {
+    width: 55%;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .product-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .section-sub-title {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .product-review {
+    margin-bottom: 15px;
+  }
+  
+  .product-price {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .product-price:hover {
+    color: #333;
+  }
+  
+  .discount-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-right: 10px;
+  }
+  
+  .original-price {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: #7f8c8d;
+  }
+  
+  .product-options {
+    margin-bottom: 20px;
+  }
+  
+  .product-color,
+  .product-size {
+    margin-bottom: 15px;
+  }
+  
+  h6:hover{
+    color: #333;
+  }
+
+  .product-size:hover{
+    color: #333;
+  }
+  
+  .size-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .size-controls button {
+    padding: 0 10px;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+  }
+  
+  .product-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .product-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .buy-now {
+    background: #e74c3c;
+    color: #fff;
+  }
+  
+  .add-to-cart {
+    background: #3498db;
+    color: #fff;
+  }
+
+  .additional-details {
+    color: #333;
+  }
+  .additional-details:hover {
+    color: #333;
+  }
+  .additional-details h6:hover {
+    color: #333;
+  }
+  .additional-details p:hover {
+    color: #333;
+  }
+ 

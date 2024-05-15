@@ -72,7 +72,7 @@ class AppRoute extends Component {
             <Route path="/purchase" element={<PurchasePage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/refund" element={<RefundPage />} />
-            <Route path="/productdetails" element={<ProductDetailsPage />} />
+            <Route path="/productdetails/:code" element={<ProductDetailsPage />} />
             <Route path="/notification" element={<NotificationPage />} />
             <Route path="/favorite" element={<FavouritePage />} />
           </Routes>

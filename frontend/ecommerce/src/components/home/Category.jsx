@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import AppURL from "../../api/AppURL";
 import axios from 'axios';
+import HeadPhones from "../../assets/images/Best Headphones.jpg";
+
 class Category extends Component {
 
   constructor(){
@@ -49,8 +51,25 @@ class Category extends Component {
           <Row>
           {View}
           </Row>
-          
-        </Container>
+                  </Container>
+
+          <div className="body">
+        <div className="wrapper">
+            <div className="product-img">
+              <img src={HeadPhones} alt="" />
+            </div>
+            <div className="product-info">
+              <div className="product-text">
+                <h1>Grab Upto 50% <br />Off  On Selected Headphone</h1>
+                {/* <p>Grab Upto 50% Off On Selected Headphone<br /> of peeled fruits and vegetables as<br /> functional objects. The surfaces<br /> appear to be sliced and pulled aside,<br /> allowing room for growth. </p> */}
+              </div>
+              <div className="product-price-btn">
+                <p><span>78</span>$</p>
+                <button type="button">buy now</button>
+              </div>
+            </div>
+          </div>
+          </div>
       </Fragment>
     );
   }

@@ -8,6 +8,7 @@
   border-radius: 20px !important;
   border: 0.5px solid #051b35;
   background: #051b35 !important;
+  width: 110px;
 }
 .navbar {
   font-size: 16px;
@@ -19,4 +20,44 @@
 
 .TopSectionDown {
   margin-bottom: 80px;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+  margin-top: 5px;
+}
+
+.logo-text {
+  margin-left: 5px;
+}
+
+.site-btn {
+  border-radius: 0px;
+}
+
+.cart-btn {
+  margin-left: 10px;
+}
+
+.navbar {
+  height: auto;
+  padding: 0px;
+}
+
+.dropdown-menu {
+  background-color: #fff;
+}
+
+.dropdown-item {
+  color: #000;
+}
+
+.float-right {
+  float: right;
+}
+
+#navbar_bar{
+  background-color: #F3F3F3;
+  margin-bottom: -5px;
 }
