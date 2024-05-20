@@ -60,3 +60,23 @@ Route::get('/productlistbysubcategory/{category}/{subcategory}',[ProductListCont
 //ProductDetails
 Route::get('/productdetails/{id}',[ProductDetailsController::class, 'ProductDetails']);
 
+// Post Product Review Route
+Route::post('/postreview',[ReviewController::class, 'PostReview']);
+
+
+
+
+
+// Cart List Route 
+Route::get('/cartlist/{email}',[ProductCartController::class, 'CartList']);
+Route::get('/removecartlist/{id}',[ProductCartController::class, 'RemoveCartList']);
+Route::get('/cartitemplus/{id}/{quantity}/{price}',[ProductCartController::class, 'CartItemPlus']);
+Route::get('/cartitemminus/{id}/{quantity}/{price}',[ProductCartController::class, 'CartItemMinus']);
+// Cart Order Route
+Route::post('/cartorder',[ProductCartController::class, 'CartOrder']);
+Route::get('/orderlistbyuser/{email}',[ProductCartController::class, 'OrderListByUser']);
+// Post Product Review Route
+Route::post('/postreview',[ReviewController::class, 'PostReview']);
+
+// Review Product Route
+Route::get('/reviewlist/{product_code}',[ReviewController::class, 'ReviewList']);

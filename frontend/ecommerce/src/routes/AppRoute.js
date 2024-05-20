@@ -16,6 +16,8 @@ import ProductDetailsPage from "../pages/ProductDetailsPage";
 import NotificationPage from "../pages/NotificationPage";
 import FavouritePage from "../pages/FavoritePage";
 import RegisterPage from "../pages/RegisterPage";
+import OrderListPage from "../pages/OrderListPage";
+
 
 class AppRoute extends Component {
   constructor() {
@@ -75,6 +77,10 @@ class AppRoute extends Component {
             <Route path="/productdetails/:code" element={<ProductDetailsPage />} />
             <Route path="/notification" element={<NotificationPage />} />
             <Route path="/favorite" element={<FavouritePage />} />
+          
+
+
+            <Route exact path="/orderlist" render={(props) => <OrderListPage user={this.state.user} {...props} key={Date.now()} /> } /> 
           </Routes>
         </Fragment>
       </Router>

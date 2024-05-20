@@ -4,6 +4,7 @@ import React, { Component, Fragment } from "react";
 import NavMenuDesktop from "../components/common/NavMenuDesktop";
 // import NavMenuMobile from "../components/common/NavMenuMobile";
 import Profile from "../components/common/Profile";
+import Footer from "../components/common/Footer";
 
 class ProfilePage extends Component {
   componentDidMount() {
@@ -23,7 +24,7 @@ class ProfilePage extends Component {
 
         <Profile user={User} />
 
-        <div className="Desktop">{/* <FooterDesktop /> */}</div>
+        <div className="Desktop">{ <Footer/> }</div>
 
         <div className="Mobile">{/* <FooterMobile /> */}</div>
       </Fragment>

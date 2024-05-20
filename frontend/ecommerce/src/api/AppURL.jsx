@@ -19,12 +19,23 @@ class AppURL {
   static ProductDetails(code) {
     return this.BaseURL + "/productdetails/" + code;
   }
+
+  
+  static OrderListByUser(email){
+    return this.BaseURL+"/orderlistbyuser/"+email;
+}
+
+
+
   
   static UserLogin = this.BaseURL + "/login";
   static UserData = this.BaseURL + "/user";
   static UserRegister = this.BaseURL + "/register";
   static UserForgetPassword = this.BaseURL + "/forgetpassword";
   static AllSlider = this.BaseURL + "/allslider";
+  static PostReview = this.BaseURL+"/postreview"
 }
+
+
 
 export default AppURL;
