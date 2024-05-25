@@ -6,7 +6,7 @@ import axios from "axios";
 import AppURL from "../api/AppURL";
 import { useParams } from "react-router-dom";
 
-const ProductDetailsPage = () => {
+const ProductDetailsPage = ({ user }) => {
   const [productData, setProductData] = useState(null);
   const { code } = useParams();
 
@@ -29,7 +29,7 @@ const ProductDetailsPage = () => {
 
   return (
     <Fragment>
-      {productData && <ProductDetails data={productData} />}
+      {productData && <ProductDetails data={productData} user={user} />}
       <SuggestedProduct />
       <div className="Desktop">
         <Footer />

@@ -23,28 +23,30 @@ class FeaturedProducts extends Component {
   }
 
   render() {
+
     const prodList = this.state.ProductData;
 
     const View = prodList.map((prodList, i) => {
       return (
-        <Col
-          key={i.toString()}
-          className="p-0"
-          xl={2}
-          lg={2}
-          md={2}
-          sm={6}
-          xs={6}
-        >
-          <Card className="image-box card">
-            <img className="center" src={prodList.image} />
-            <Card.Body>
-              <p className="product-name-on-card">
-                {prodList.title} -Brand: {prodList.brand}
-              </p>
-              <p className="product-price-on-card">{prodList.price}$</p>
-            </Card.Body>
-          </Card>
+        <Col key={i.toString()} className="p-2" xl={2} lg={3} md={4} sm={4} xs={10}>
+          <Link to={"/productdetails/" + prodList.id} style={{ textDecoration: 'none' }}>
+            <Card className="product-card">
+              <div className="image-container">
+                <img className="center product-image" src={prodList.image} alt={prodList.title} />
+                <button className="favorite-button">❤️</button>
+              </div>
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h3 className="product-name">{prodList.title}</h3>
+                    <span className="product-price">${prodList.price}</span>
+                  </div>
+                  <p className="product-rating">⭐ {prodList.rating?.rate}</p>
+                </div>
+                <button className="add-to-cart">Add to Cart</button>
+              </Card.Body>
+            </Card>
+          </Link>
         </Col>
       );
     });
@@ -57,7 +59,6 @@ class FeaturedProducts extends Component {
           </div>
           <Row>
             {View}
-            
           </Row>
         </Container>
       </Fragment>

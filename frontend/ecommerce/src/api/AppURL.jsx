@@ -34,6 +34,13 @@ class AppURL {
   static UserForgetPassword = this.BaseURL + "/forgetpassword";
   static AllSlider = this.BaseURL + "/allslider";
   static PostReview = this.BaseURL+"/postreview"
+  static addToCart = this.BaseURL+"/addtocart"
+  static CartCount(product_code){
+    return this.BaseURL+"/cartcount/"+product_code;
+}
+static CartList(email){
+  return this.BaseURL+"/cartlist/"+email;
+}
 }
 
 

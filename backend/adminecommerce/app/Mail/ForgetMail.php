@@ -13,7 +13,7 @@ class ForgetMail extends Mailable
 
      public $token;
 
-    /** 
+    /**
      * Create a new message instance.
      *
      * @return void
@@ -31,6 +31,6 @@ class ForgetMail extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->from('support@easylearningbd.com')->view('mail.forget',compact('data'))->subject('Password Reset Link');
+        return $this->from('support@ecommerceadmin.com')->view('mail.forget',compact('data'))->subject('Password Reset Link');
     }
 }

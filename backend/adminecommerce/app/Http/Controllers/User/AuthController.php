@@ -11,15 +11,18 @@ use App\Models\User;
 use App\Http\Requests\RegisterRequest;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 
 class AuthController extends Controller
 {
-     public function Login(Request $request){
+    public function Login(Request $request)
+    {
 
-        try{
+        try {
 
-            if (Auth::attempt($request->only('email','password'))) {
+            if (Auth::attempt($request->only('email', 'password'))) {
                 $user = Auth::user();
                 $token = $user->createToken('app')->accessToken;
 
@@ -27,45 +30,52 @@ class AuthController extends Controller
                     'message' => "Successfully Login",
                     'token' => $token,
                     'user' => $user
-                ],200); // States Code
+                ], 200); // States Code
             }
 
-        }catch(Exception $exception){
+        } catch (Exception $exception) {
             return response([
                 'message' => $exception->getMessage()
-            ],400);
+            ], 400);
         }
         return response([
-            'message' => 'Invalid Email Or Password' 
-        ],401);
+            'message' => 'Invalid Email Or Password'
+        ], 401);
 
-    } // end method 
+    } // end method
 
 
- public function Register(RegisterRequest $request){
-
-        try{
-
+    public function register(RegisterRequest $request)
+    {
+        try {
+            // Create a new user with hashed password
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password) 
+                'password' => Hash::make($request->password),
             ]);
+
+            // Generate the token for the user
             $token = $user->createToken('app')->accessToken;
 
-            return response([
-                'message' => "Registration Successfull",
+            // Return success response with user data and token
+            return response()->json([
+                'message' => 'Registration Successful',
                 'token' => $token,
                 'user' => $user
-            ],200);
+            ], 200);
+        } catch (\Exception $exception) {
+            // Log the exception for debugging
+            Log::error('Registration error: '.$exception->getMessage());
 
-            }catch(Exception $exception){
-                return response([
-                    'message' => $exception->getMessage()
-                ],400);
-            } 
-
-    } // end method
+            // Return error response
+            return response()->json([
+                'message' => 'Registration failed',
+                'error' => $exception->getMessage()
+            ], 400);
+        }
+    }
+    // end mehtod
 
 
 

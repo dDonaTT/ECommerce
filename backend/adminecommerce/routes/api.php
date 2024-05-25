@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 // use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductListController;
+use App\Http\Controllers\Admin\ProductCartController;
 use App\Http\Controllers\Admin\ProductDetailsController;
-
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ForgetController;
 use App\Http\Controllers\User\ResetController;
@@ -27,47 +27,32 @@ Route::get('/user', function (Request $request) {
 Route::post('/register',[AuthController::class, 'Register']);
 
  // Forget Password Routes
- Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
+Route::post('/forgetpassword',[ForgetController::class, 'ForgetPassword']);
 
  // Reset Password Routes
 Route::post('/resetpassword',[ResetController::class, 'ResetPassword']);
 
-// Current User Route
+ // Current User Route
 Route::get('/user',[UserController::class, 'User'])->middleware('auth:api');
 
 
  /////////////// End User Login API Start ////////////////////////
 
-
-
-//Category Route
 Route::get('/allcategory',[CategoryController::class, 'AllCategory']);
 
-//Slider Route
 Route::get('/allslider',[SliderController::class, 'AllSlider']);
 
-
-//User Route
 Route::get('/alluser',[UserController::class, 'AllUser']);
 Route::get('/allproduct',[ProductListController::class, 'AllProducts']);
-
-//Product
 Route::get('/productlistbyremark/{remark}',[ProductListController::class, 'ProductListByRemark']);
 Route::get('/productlistbycategory/{category}',[ProductListController::class, 'ProductListByCategory']);
 Route::get('/productlistbysubcategory/{category}/{subcategory}',[ProductListController::class, 'ProductListBySubCategory']);
 
-
-//ProductDetails
 Route::get('/productdetails/{id}',[ProductDetailsController::class, 'ProductDetails']);
 
-// Post Product Review Route
 Route::post('/postreview',[ReviewController::class, 'PostReview']);
 
-
-
-
-
-// Cart List Route 
+// Cart List Route
 Route::get('/cartlist/{email}',[ProductCartController::class, 'CartList']);
 Route::get('/removecartlist/{id}',[ProductCartController::class, 'RemoveCartList']);
 Route::get('/cartitemplus/{id}/{quantity}/{price}',[ProductCartController::class, 'CartItemPlus']);
@@ -80,3 +65,6 @@ Route::post('/postreview',[ReviewController::class, 'PostReview']);
 
 // Review Product Route
 Route::get('/reviewlist/{product_code}',[ReviewController::class, 'ReviewList']);
+
+Route::post('/addtocart',[ProductCartController::class, 'addToCart']);
+Route::get('/cartcount/{product_code}',[ProductCartController::class, 'CartCount']);

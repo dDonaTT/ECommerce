@@ -1,18 +1,21 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
+
 class ReviewController extends Controller
 {
     public function ReviewList(Request $request){
+
         $product_code = $request->product_code;
         $result = ProductReview::where('product_code',$product_code)->orderBy('id','desc')->limit(4)->get();
         return $result;
-    } // End Method 
+    } // End Method
 
 
-}
 
     public function PostReview(Request $request){
 
@@ -34,10 +37,10 @@ class ReviewController extends Controller
          ]);
          return $result;
 
-    } // End Method 
+    } // End Method
 
 
 
 
 
-} 
+}

@@ -116,31 +116,6 @@ class NavMenuDesktop extends Component {
     }
 
     const { MenuData } = this.state;
-
-    // const View = catList.map((catList, i) => {
-    //   return (
-    //     <div key={i.toString()}>
-    //       <button onClick={this.MenuItemClick} className="accordion">
-    //         <img className="accordionMenuIcon" src={catList.category_image} />
-    //         &nbsp; {catList.category_name}
-    //       </button>
-    //       <div className="panel">
-    //         <ul>
-    //           {catList.subcategory_name.map((SubList, i) => {
-    //             return (
-    //               <li>
-    //                 <a href="#" className="accordionItem">
-    //                   {SubList.subcategory_name}{" "}
-    //                 </a>
-    //               </li>
-    //             );
-    //           })}
-    //         </ul>
-    //       </div>
-    //     </div>
-    //   );
-    // });
-
     return (
       <Fragment >
         <div className="TopSectionDown">

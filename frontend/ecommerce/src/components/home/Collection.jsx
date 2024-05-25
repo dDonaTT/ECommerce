@@ -23,42 +23,36 @@ class Collection extends Component {
 
   render() {
     const CollectionList = this.state.ProductData;
-    const MyView = CollectionList.map((CollectionList, i) => {
-      if (CollectionList.special_price == "na") {
+    const MyView = CollectionList.map((product, i) => {
+      if (product.special_price === "na") {
         return (
-          <Link to={"/productdetails/" + CollectionList.id}>
-            <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
+          <Col key={i} className="p-2" xl={3} lg={3} md={4} sm={6} xs={12}>
+            <Link to={"/productdetails/" + product.id}>
               <Card className="image-box card w-100">
-                <img className="center w-75" src={CollectionList.image} />
+                <img className="center w-75" src={product.image} alt={product.title} />
                 <Card.Body>
-                  <p className="product-name-on-card">{CollectionList.title}</p>
-                  <p className="product-price-on-card">
-                    Price : ${CollectionList.price}
-                  </p>
+                  <p className="product-name-on-card">{product.title}</p>
+                  <p className="product-price-on-card">Price : ${product.price}</p>
                 </Card.Body>
               </Card>
-            </Col>
-          </Link>
+            </Link>
+          </Col>
         );
       } else {
         return (
-          <Link to={"/productdetails/" + CollectionList.id}>
-          <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6}>
-            <Card className="image-box card w-100">
-              <img className="center w-75" src={CollectionList.image} />
-              <Card.Body>
-                <p className="product-name-on-card">{CollectionList.title}</p>
-                <p className="product-price-on-card">
-                  Price :{" "}
-                  <strike className="text-secondary">
-                    ${CollectionList.price}
-                  </strike>{" "}
-                  ${CollectionList.special_price}
-                </p>
-              </Card.Body>
-            </Card>
+          <Col key={i} className="p-2" xl={3} lg={3} md={4} sm={6} xs={12}>
+            <Link to={"/productdetails/" + product.id}>
+              <Card className="image-box card w-100">
+                <img className="center w-75" src={product.image} alt={product.title} />
+                <Card.Body>
+                  <p className="product-name-on-card">{product.title}</p>
+                  <p className="product-price-on-card">
+                    Price : <strike className="text-secondary">${product.price}</strike> ${product.special_price}
+                  </p>
+                </Card.Body>
+              </Card>
+            </Link>
           </Col>
-          </Link>
         );
       }
     });
@@ -67,11 +61,11 @@ class Collection extends Component {
       <Fragment>
         <Container className="text-center" fluid={true}>
           <div className="section-title text-center mb-55">
-            <h2> PRODUCT COLLECTION</h2>
+            <h2>PRODUCT COLLECTION</h2>
             <p>Some Of Our Exclusive Collection, You May Like</p>
           </div>
 
-          <Row>{MyView}</Row>
+          <Row className="justify-content-center">{MyView}</Row>
         </Container>
       </Fragment>
     );

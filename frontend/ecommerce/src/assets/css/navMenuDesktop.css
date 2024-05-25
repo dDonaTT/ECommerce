@@ -9,6 +9,7 @@
   border: 0.5px solid #051b35;
   background: #051b35 !important;
   width: 110px;
+  text-decoration: none;
 }
 .navbar {
   font-size: 16px;
