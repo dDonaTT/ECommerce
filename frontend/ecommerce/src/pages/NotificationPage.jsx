@@ -1,31 +1,27 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment } from "react";
 
-import Notification from '../components/Notification/Notification'
-import Footer from '../components/common/Footer'
-
+import Notification from "../components/Notification/Notification";
+import Footer from "../components/common/Footer";
+import NavMenuDesktop from "../components/common/NavMenuDesktop";
 
 class NotificationPage extends Component {
+  componentDidMount() {
+    window.scroll(0, 0);
+  }
 
-     componentDidMount(){
-          window.scroll(0,0)
-     }
+  render() {
+    return (
+      <Fragment>
+        <NavMenuDesktop />
 
-     render() {
-          return (
-               <Fragment> 
-               
+        <Notification />
 
-              
-               <Notification /> 
-
-               <div className="Desktop">
-               <Footer/>
-               </div>
-
-             
-          </Fragment>
-          )
-     }
+        <div className="Desktop">
+          <Footer />
+        </div>
+      </Fragment>
+    );
+  }
 }
 
-export default NotificationPage
+export default NotificationPage;

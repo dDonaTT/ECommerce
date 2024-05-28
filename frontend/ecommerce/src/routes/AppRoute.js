@@ -18,6 +18,8 @@ import FavouritePage from "../pages/FavoritePage";
 import CartPage from "../pages/CartPage";
 import RegisterPage from "../pages/RegisterPage";
 import OrderListPage from "../pages/OrderListPage";
+import ProtectedRoute from "./ProtectedRoute";
+import CartOrderPage from "../pages/CartOrderPage";
 
 class AppRoute extends Component {
   constructor() {
@@ -28,23 +30,31 @@ class AppRoute extends Component {
   }
 
   componentDidMount() {
+    this.fetchUserData();
+  }
+
+  fetchUserData = () => {
     axios
       .get(AppURL.UserData)
       .then((response) => {
         this.setUser(response.data);
       })
-      .catch((error) => {});
-  }
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   setUser = (user) => {
     this.setState({ user: user });
   };
 
+  
   render() {
+    const role = localStorage.getItem("role");
     return (
       <Router>
         <Fragment>
-          <NavMenuDesktop user={this.state.user} setUser={this.setUser} />
+          <NavMenuDesktop user={this.state.user} setUser={this.setUser} product_code={this.state.product_code}/>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route
@@ -82,6 +92,18 @@ class AppRoute extends Component {
               element={<OrderListPage user={this.state.user} />}
             />
             <Route path="/cart" element={<CartPage user={this.state.user}/> } />
+            <Route path="/cartorder" element={<CartOrderPage user={this.state.user}/> } />
+            {/* <Route
+              path="/productdetails/:code"
+              element={
+                <ProtectedRoute role="admin">
+                  <ProductDetailsPage user={this.state.user} />
+                </ProtectedRoute>
+              }
+            /> */}
+
+            <Route path="*" element={<h5>Page Not Found</h5>} />
+
           </Routes>
         </Fragment>
       </Router>

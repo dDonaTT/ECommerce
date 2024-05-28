@@ -12,6 +12,7 @@ const ProductDetails = ({ data, user }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(productList[0]);
 
   const handleImageClick = (image) => {
     setMainImage(image);
@@ -29,13 +30,13 @@ const ProductDetails = ({ data, user }) => {
       return;
     }
 
-    const productCode = productList[0].product_code;
-    const productTitle = productList[0].title;
-    const productImage = productList[0].image;
+    const productCode = selectedProduct.product_code;
+    const productTitle = selectedProduct.title;
+    const productImage = selectedProduct.image;
 
-    let unitPrice = productList[0].discount_price
-      ? productList[0].discount_price
-      : productList[0].price;
+    let unitPrice = selectedProduct.discount_price
+      ? selectedProduct.discount_price
+      : selectedProduct.price;
     let totalPrice = unitPrice * quantity;
 
     let email = user.email;
@@ -56,7 +57,7 @@ const ProductDetails = ({ data, user }) => {
     axios
       .post(AppURL.addToCart, MyFormData)
       .then((response) => {
-        if (response.data === 1) {
+        if (response.data.success) {
           cogoToast.success("Product Added Successfully", {
             position: "top-right",
           });
@@ -67,7 +68,10 @@ const ProductDetails = ({ data, user }) => {
         }
       })
       .catch((error) => {
-        console.error("There was an error adding the product to the cart!", error);
+        console.error(
+          "There was an error adding the product to the cart!",
+          error
+        );
         cogoToast.error("Your Request is not done! Try Again", {
           position: "top-right",
         });
@@ -112,7 +116,7 @@ const ProductDetails = ({ data, user }) => {
           </div>
         </div>
         <div className="product-details">
-          <h1 className="product-name">{productList[0].title}</h1>
+          <h1 className="product-name">{selectedProduct.title}</h1>
           <h6 className="section-sub-title">
             {productDetails[0].short_description}
           </h6>
@@ -127,15 +131,15 @@ const ProductDetails = ({ data, user }) => {
           <hr />
           <div className="product-price">
             <div className="discount-price">
-              ${productList[0].discount_price}
+              ${selectedProduct.discount_price}
             </div>
-            <div className="original-price">${productList[0].price}</div>
+            <div className="original-price">${selectedProduct.price}</div>
           </div>
-          <h6 className="mt-2">Category: {productList[0].category}</h6>
-          <h6 className="mt-2">Subcategory: {productList[0].subcategory}</h6>
+          <h6 className="mt-2">Category: {selectedProduct.category}</h6>
+          <h6 className="mt-2">Subcategory: {selectedProduct.subcategory}</h6>
           <hr />
-          <h6 className="mt-2">Brand: {productList[0].brand}</h6>
-          <h6 className="mt-2">Product Code: {productList[0].product_code}</h6>
+          <h6 className="mt-2">Brand: {selectedProduct.brand}</h6>
+          <h6 className="mt-2">Product Code: {selectedProduct.product_code}</h6>
           <hr />
           <h6 className="mt-2">Choose Color</h6>
           <select onChange={(e) => setSelectedColor(e.target.value)}>

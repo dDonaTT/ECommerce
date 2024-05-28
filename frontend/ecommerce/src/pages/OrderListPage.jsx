@@ -1,36 +1,41 @@
-import React, { Component, Fragment } from 'react'
-import OrderList from '../components/cart/OrderList'
+import React, { Component, Fragment } from "react";
+import OrderList from "../components/cart/OrderList";
 import Footer from "../components/common/Footer";
-import NavMenuDesktop from '../components/common/NavMenuDesktop'
+import NavMenuDesktop from "../components/common/NavMenuDesktop";
+import axios from "axios";
+import AppURL from "../api/AppURL";
 
-
- 
 export class OrderListPage extends Component {
-     componentDidMount(){
-          window.scroll(0,0)
-     } 
+  componentDidMount() {
+    window.scroll(0, 0);
+  }
 
-     render() {
+  fetchCartData = async () => {
+    try {
+      const response = await axios.get(AppURL.CartList((this.props.user.email)));
+      this.setState({ cartData: response.data });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-          const User = this.props.user;
 
-          return (
-              <Fragment> 
-               <div className="Desktop">
-                <NavMenuDesktop /> 
-               </div>
-                                   
+  render() {
 
-               
-               <OrderList user={User} /> 
+    const { user } = this.props.user;
 
-               <div className="Desktop">
-               <Footer/>
-               </div>
-             
-               
-          </Fragment>
-          )
-     }
+    return (
+      <Fragment>
+        <div className="Desktop">
+          <NavMenuDesktop />
+        </div>
+
+        <OrderList user={user} />
+
+       
+      </Fragment>
+    );
+  }
 }
-export default OrderListPage
+export default OrderListPage;

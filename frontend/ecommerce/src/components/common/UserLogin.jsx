@@ -29,6 +29,8 @@ class UserLogin extends Component {
       .post(AppURL.UserLogin, data)
       .then((response) => {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_email", this.state.email);
+        localStorage.setItem("role", response.data.user.role);
         this.setState({ loggedIn: true });
 
         this.props.setUser(response.data.user);

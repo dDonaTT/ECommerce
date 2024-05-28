@@ -5,6 +5,7 @@ import SuggestedProduct from "../components/ProductDetails/SuggestedProduct";
 import axios from "axios";
 import AppURL from "../api/AppURL";
 import { useParams } from "react-router-dom";
+import NavMenuDesktop from "../components/common/NavMenuDesktop";
 
 const ProductDetailsPage = ({ user }) => {
   const [productData, setProductData] = useState(null);
@@ -15,7 +16,7 @@ const ProductDetailsPage = ({ user }) => {
 
     const url = AppURL.ProductDetails(code);
     console.log("Request URL:", url);
-  
+
     axios
       .get(url)
       .then((response) => {
@@ -29,6 +30,7 @@ const ProductDetailsPage = ({ user }) => {
 
   return (
     <Fragment>
+      <NavMenuDesktop />
       {productData && <ProductDetails data={productData} user={user} />}
       <SuggestedProduct />
       <div className="Desktop">

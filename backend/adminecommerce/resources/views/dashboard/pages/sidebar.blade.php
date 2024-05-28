@@ -24,8 +24,8 @@
 					<img src="{{ asset('admin/assets/images/flash-card.png') }}" class="logo-icon" alt="logo icon">
 				</div>
 				<div>
-					<h4 class="logo-text lilita-one-regular"
-                    style="color: #F29F38;">Snap Buy</h4>
+					<a href='http://localhost:3000/' class="logo-text lilita-one-regular"
+                    style="color: #F29F38;">Snap Buy</a>
 				</div>
 				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left' style="color: #F29F38;"></i>
 				</div>

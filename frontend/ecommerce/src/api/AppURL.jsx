@@ -20,29 +20,37 @@ class AppURL {
     return this.BaseURL + "/productdetails/" + code;
   }
 
-  
-  static OrderListByUser(email){
-    return this.BaseURL+"/orderlistbyuser/"+email;
-}
+  static OrderListByUser(email) {
+    return this.BaseURL + "/orderlistbyuser/" + email;
+  }
 
-
-
-  
   static UserLogin = this.BaseURL + "/login";
   static UserData = this.BaseURL + "/user";
   static UserRegister = this.BaseURL + "/register";
   static UserForgetPassword = this.BaseURL + "/forgetpassword";
   static AllSlider = this.BaseURL + "/allslider";
-  static PostReview = this.BaseURL+"/postreview"
-  static addToCart = this.BaseURL+"/addtocart"
-  static CartCount(product_code){
-    return this.BaseURL+"/cartcount/"+product_code;
-}
-static CartList(email){
-  return this.BaseURL+"/cartlist/"+email;
-}
-}
+  static PostReview = this.BaseURL + "/postreview";
+  static addToCart = this.BaseURL + "/addtocart";
 
+  static CartCount = this.BaseURL + "/cartcount";
 
+  static CartList(email) {
+    return this.BaseURL + "/cartlist/" + email;
+  }
+
+  static RemoveCartList(id) {
+    return this.BaseURL + "/removecartlist/" + id;
+  }
+
+  static CartItemPlus(id, quantity, price) {
+    return this.BaseURL + "/cartitemplus/" + id + "/" + quantity + "/" + price;
+  }
+
+  static CartItemMinus(id, quantity, price) {
+    return this.BaseURL + "/cartitemminus/" + id + "/" + quantity + "/" + price;
+  }
+
+  static CartOrder = this.BaseURL + "/cartorder";
+}
 
 export default AppURL;

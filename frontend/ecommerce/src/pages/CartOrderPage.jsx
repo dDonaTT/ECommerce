@@ -1,13 +1,10 @@
 import React, { Component, Fragment } from "react";
-import Cart from "../components/cart/Cart";
-import Footer from "../components/common/Footer";
 import axios from "axios";
 import AppURL from "../api/AppURL";
 import NavMenuDesktop from "../components/common/NavMenuDesktop";
-import OrderList from "../components/cart/OrderList";
 import CartOrder from "../components/cart/CartOrder";
 
-class CartPage extends Component {
+class CartOrderPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,18 +29,15 @@ class CartPage extends Component {
 
   render() {
     const { cartData } = this.state;
-    const { user } = this.props;
 
     return (
       <Fragment>
         <NavMenuDesktop />
-        {cartData && <Cart data={cartData} user={user} />}
+        {cartData && <CartOrder data={cartData} user={this.props.user} />}
         <div className="Desktop">{/* <Footer /> */}</div>
-
-        {/* <OrderList/> */}
       </Fragment>
     );
   }
 }
 
-export default CartPage;
+export default CartOrderPage;

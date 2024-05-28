@@ -59,11 +59,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|in:admin,user,manager',
         ]);
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role = $request->role;
 
         if ($request->has('password')) {
             $request->validate([
@@ -93,4 +95,22 @@ class UserController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    // public function UpdateUserRole(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'role' => 'required|in:admin,user,manager',
+    //     ]);
+
+    //     $user = User::findOrFail($id);
+    //     $user->role = $request->role;
+    //     $user->save();
+
+    //     $notification = [
+    //         'message' => 'User role updated successfully',
+    //         'alert-type' => 'success'
+    //     ];
+
+    //     return redirect()->route('all.user')->with($notification);
+    // }
 }

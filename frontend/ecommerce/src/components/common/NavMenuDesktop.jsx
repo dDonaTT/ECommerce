@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Navbar, Container, Row, Col, Button, Dropdown } from "react-bootstrap";
-import Logo from "../../assets/images/flash-card.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AppURL from "../../api/AppURL";
@@ -8,12 +7,14 @@ import AppURL from "../../api/AppURL";
 class NavMenuDesktop extends Component {
   logout = () => {
     localStorage.clear();
+    window.location.reload();
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       MenuData: [],
+      cartCount: 0,
     };
   }
 
@@ -27,7 +28,26 @@ class NavMenuDesktop extends Component {
       .catch((error) => {
         console.log(error);
       });
+
+    this.fetchCartCount(); 
   }
+
+  fetchCartCount = () => {
+    const email = localStorage.getItem("user_email");
+    console.log(email);
+    if (email) {
+      axios
+        .get(AppURL.CartList(email))
+        .then((response) => {
+          const uniqueProductCodes = new Set(response.data.map(item => item.product_code));
+          console.log(uniqueProductCodes);
+          this.setState({ cartCount: uniqueProductCodes.size });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
 
   MenuItemClick = (event) => {
     event.preventDefault();
@@ -43,23 +63,29 @@ class NavMenuDesktop extends Component {
   };
 
   render() {
+    const { MenuData, cartCount } = this.state; 
     let buttons;
-    if (localStorage.getItem("token")) {
+
+    if (localStorage.getItem("token") && localStorage.getItem("role") === 'user' ) {
       buttons = (
         <div className="d-flex align-items-center">
-          <Link to="/favourite" className="btn btn-sm">
-            <i className="fa h4 fa-heart"></i>
-            <sup>
-              <span className="badge text-white bg-danger">3</span>
-            </sup>
-          </Link>
+          <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
+            <Link to="/favourite" className="btn btn-sm">
+              <i className="fa h4 fa-heart"></i>
+              <sup>
+                <span className="badge text-white bg-danger">3</span>
+              </sup>
+            </Link>
+          </Col>
 
-          <Link to="/notification" className="btn btn-sm">
-            <i className="fa h4 fa-bell"></i>
-            <sup>
-              <span className="badge text-white bg-danger">5</span>
-            </sup>
-          </Link>
+          <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
+            <Link to="/notification" className="btn btn-sm">
+              <i className="fa h4 fa-bell"></i>
+              <sup>
+                <span className="badge text-white bg-danger">5</span>
+              </sup>
+            </Link>
+          </Col>
 
           <Link to="/profile" className="h4 btn btn-sm poppins-medium">
             PROFILE
@@ -68,12 +94,56 @@ class NavMenuDesktop extends Component {
             LOGOUT
           </Link>
 
-          <Link to="/cart" className="cart-btn btn btn-sm">
-            <i className="fa fa-shopping-cart"></i> 3 Items{" "}
-          </Link>
+          <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
+            <Link to="/cart" className="cart-btn btn btn-sm poppins-medium">
+              <i className="fa fa-shopping-cart"></i> {cartCount} Items
+            </Link>
+          </Col>
         </div>
       );
-    } else {
+    } else if(localStorage.getItem("role") === 'admin' ) {
+      buttons = (
+        <div className="d-flex align-items-center">
+          <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
+            <Link to="/favourite" className="btn btn-sm">
+              <i className="fa h4 fa-heart"></i>
+              <sup>
+                <span className="badge text-white bg-danger">3</span>
+              </sup>
+            </Link>
+          </Col>
+
+          <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
+            <Link to="/notification" className="btn btn-sm">
+              <i className="fa h4 fa-bell"></i>
+              <sup>
+                <span className="badge text-white bg-danger">5</span>
+              </sup>
+            </Link>
+          </Col>
+
+          <Col className="p-0 mt-1" lg={6} md={6} sm={12} xs={12}>
+            <Link to="http://127.0.0.1:8000/dashboard" className="h4 btn btn-sm poppins-medium">
+              DASHBOARD
+            </Link>
+          </Col>
+
+          <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
+          <Link to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
+            LOGOUT
+          </Link>
+          </Col>
+
+          
+
+          <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
+            <Link to="/cart" className="cart-btn btn btn-sm poppins-medium">
+              <i className="fa fa-shopping-cart"></i> {cartCount} Items
+            </Link>
+          </Col>
+        </div>
+      );
+    }   else{
       buttons = (
         <div className="d-flex align-items-center">
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
@@ -108,15 +178,13 @@ class NavMenuDesktop extends Component {
 
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
             <Link to="/cart" className="cart-btn btn btn-sm poppins-medium">
-              <i className="fa fa-shopping-cart"></i> 3 Items{" "}
+              <i className="fa fa-shopping-cart"></i> {cartCount} Items
             </Link>
           </Col>
         </div>
       );
     }
-
-    const { MenuData } = this.state;
-    return (
+     return (
       <Fragment >
         <div className="TopSectionDown">
           {/* Secondary Navbar */}
