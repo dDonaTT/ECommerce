@@ -51,6 +51,12 @@ class AppURL {
   }
 
   static CartOrder = this.BaseURL + "/cartorder";
+
+  static NotificationHistory = this.BaseURL + "/notification";
+
+  static AddFavourite(product_code, email) {
+    return this.BaseURL + "/favourite/" + product_code + "/" + email;
+  }
 }
 
 export default AppURL;

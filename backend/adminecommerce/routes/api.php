@@ -13,6 +13,8 @@ use App\Http\Controllers\User\ForgetController;
 use App\Http\Controllers\User\ResetController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\FavouriteController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -67,3 +69,9 @@ Route::get('/reviewlist/{product_code}', [ReviewController::class, 'ReviewList']
 
 Route::post('/addtocart', [ProductCartController::class, 'addToCart']);
 Route::get('/cartcount', [ProductCartController::class, 'CartCount']);
+
+// Notification Route
+Route::get('/notification', [NotificationController::class, 'NotificationHistory']);
+
+// Favourite Route
+Route::get('/favourite/{product_code}/{email}',[FavouriteController::class, 'AddFavourite']);
