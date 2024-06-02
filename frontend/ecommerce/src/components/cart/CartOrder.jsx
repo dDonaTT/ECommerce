@@ -10,8 +10,10 @@ class CartOrder extends Component {
     super(props);
     this.state = {
       showShippingAddress: false,
+      showPaymentMethod: false,
       city: "",
       payment: "",
+      delivery: "",
       name: "",
       address: "",
       lastname: "",
@@ -25,6 +27,7 @@ class CartOrder extends Component {
 
   handleContinueClick = () => {
     this.setState({ showShippingAddress: true });
+    this.setState({ showPaymentMethod: true });
   };
 
   handleChange = (event) => {
@@ -33,7 +36,7 @@ class CartOrder extends Component {
   };
 
   confirmOnClick = () => {
-    const { city, payment, name, address, email } = this.state;
+    const { city, payment, delivery, name, address, email } = this.state;
 
     if (!city || !payment || !name || !address) {
       cogoToast.error("Please fill out all required fields", {
@@ -45,6 +48,7 @@ class CartOrder extends Component {
     const MyFormData = new FormData();
     MyFormData.append("city", city);
     MyFormData.append("payment_method", payment);
+    MyFormData.append("delivery_method", delivery);
     MyFormData.append("name", name);
     MyFormData.append("delivery_address", address);
     MyFormData.append("email", email);
@@ -58,7 +62,7 @@ class CartOrder extends Component {
           cogoToast.success("Order placed successfully", {
             position: "top-right",
           });
-          // this.fetchCartData();
+
           this.setState({ redirectToOrderList: true });
         } else {
           cogoToast.error("Order placement failed. Try again", {
@@ -126,7 +130,7 @@ class CartOrder extends Component {
                                   <input
                                     type="radio"
                                     className="form-check-input fs-base me-2 me-sm-3"
-                                    name="payment"
+                                    name="delivery"
                                     value="Courier"
                                     onChange={this.handleChange}
                                   />
@@ -146,7 +150,7 @@ class CartOrder extends Component {
                                   <input
                                     type="radio"
                                     className="form-check-input fs-base me-2 me-sm-3"
-                                    name="payment"
+                                    name="delivery"
                                     value="Pickup"
                                     onChange={this.handleChange}
                                   />
@@ -169,7 +173,7 @@ class CartOrder extends Component {
                                   <input
                                     type="radio"
                                     className="form-check-input fs-base me-2 me-sm-3"
-                                    name="payment"
+                                    name="delivery"
                                     value="Local Shipping"
                                     onChange={this.handleChange}
                                   />
@@ -332,6 +336,41 @@ class CartOrder extends Component {
                       </div>
                     </form>
                   )}
+                  {this.state.showPaymentMethod && (
+                    <div>
+                      <h1 className="h5 mb-md-4">Payment method</h1>
+                      <div className="border-bottom">
+                        <div className="form-check mb-0">
+                          <label className="form-check-label d-flex align-items-center text-dark-emphasis fw-semibold py-4">
+                            <input
+                              type="radio"
+                              className="form-check-input fs-base me-2 me-sm-3"
+                              name="payment"
+                              value="Cash"
+                              onChange={this.handleChange}
+                              checked={this.state.payment === "Cash"}
+                            />
+                            Cash on Delivery
+                          </label>
+                        </div>
+                      </div>
+                      <div className="border-bottom">
+                        <div className="form-check mb-0">
+                          <label className="form-check-label d-flex align-items-center text-dark-emphasis fw-semibold py-4">
+                            <input
+                              type="radio"
+                              className="form-check-input fs-base me-2 me-sm-3"
+                              name="payment"
+                              value="Card"
+                              onChange={this.handleChange}
+                              checked={this.state.payment === "Card"}
+                            />
+                            Credit/Debit Card
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -349,40 +388,6 @@ class CartOrder extends Component {
               </div>
             </div>
           </div>
-
-          {/* <div className="col-lg-4 col-xl-5">
-            <div className="card shadow-sm rounded-3 p-4 p-lg-5">
-              <div className="border-bottom pb-2 mb-4">
-                <h2 className="h5 mb-3">Order summary</h2>
-                <ul className="list-unstyled fs-sm pb-3">
-                  <li className="d-flex justify-content-between align-items-center">
-                    <span className="me-2">Product name</span>
-                    <span className="text-end">1 x $15.00</span>
-                  </li>
-                </ul>
-                <ul className="list-unstyled fs-sm border-top pt-3">
-                  <li className="d-flex justify-content-between align-items-center">
-                    <span className="me-2">Subtotal:</span>
-                    <span className="text-end">$15.00</span>
-                  </li>
-                  <li className="d-flex justify-content-between align-items-center">
-                    <span className="me-2">Shipping:</span>
-                    <span className="text-end">$5.00</span>
-                  </li>
-                  <li className="d-flex justify-content-between align-items-center">
-                    <span className="me-2">Total:</span>
-                    <span className="text-end">$20.00</span>
-                  </li>
-                </ul>
-              </div>
-              <Button
-                className="btn btn-lg btn-primary w-100"
-                onClick={this.confirmOnClick}
-              >
-                {this.state.confirmBtn}
-              </Button>
-            </div>
-          </div> */}
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Navbar, Container, Row, Col, Button, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink, Element } from "react-scroll";
 import axios from "axios";
 import AppURL from "../../api/AppURL";
 
@@ -15,6 +16,7 @@ class NavMenuDesktop extends Component {
     this.state = {
       MenuData: [],
       cartCount: 0,
+      favoriteCount: 0, // State for favorite count
     };
   }
 
@@ -29,7 +31,8 @@ class NavMenuDesktop extends Component {
         console.log(error);
       });
 
-    this.fetchCartCount(); 
+    this.fetchCartCount();
+    this.fetchFavoriteCount();
   }
 
   fetchCartCount = () => {
@@ -42,6 +45,20 @@ class NavMenuDesktop extends Component {
           const uniqueProductCodes = new Set(response.data.map(item => item.product_code));
           console.log(uniqueProductCodes);
           this.setState({ cartCount: uniqueProductCodes.size });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  fetchFavoriteCount = () => {
+    const email = localStorage.getItem("user_email");
+    if (email) {
+      axios
+        .get(AppURL.FavouriteList(email))
+        .then((response) => {
+          this.setState({ favoriteCount: response.data.length });
         })
         .catch((error) => {
           console.error(error);
@@ -63,41 +80,41 @@ class NavMenuDesktop extends Component {
   };
 
   render() {
-    const { MenuData, cartCount } = this.state; 
+    const { MenuData, cartCount, favoriteCount } = this.state;
     let buttons;
 
     if (localStorage.getItem("token") && localStorage.getItem("role") === 'user' ) {
       buttons = (
         <div className="d-flex align-items-center">
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/favourite" className="btn btn-sm">
+            <RouterLink to="/favourite" className="btn btn-sm">
               <i className="fa h4 fa-heart"></i>
               <sup>
-                <span className="badge text-white bg-danger">3</span>
+                <span className="badge text-white bg-danger">{favoriteCount}</span>
               </sup>
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/notification" className="btn btn-sm">
+            <RouterLink to="/notification" className="btn btn-sm">
               <i className="fa h4 fa-bell"></i>
               <sup>
                 <span className="badge text-white bg-danger">5</span>
               </sup>
-            </Link>
+            </RouterLink>
           </Col>
 
-          <Link to="/profile" className="h4 btn btn-sm poppins-medium">
+          <RouterLink to="/profile" className="h4 btn btn-sm poppins-medium">
             PROFILE
-          </Link>
-          <Link to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
+          </RouterLink>
+          <RouterLink to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
             LOGOUT
-          </Link>
+          </RouterLink>
 
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
-            <Link to="/cart" className="cart-btn btn btn-sm poppins-medium">
+            <RouterLink to="/cart" className="cart-btn btn btn-sm poppins-medium">
               <i className="fa fa-shopping-cart"></i> {cartCount} Items
-            </Link>
+            </RouterLink>
           </Col>
         </div>
       );
@@ -105,117 +122,114 @@ class NavMenuDesktop extends Component {
       buttons = (
         <div className="d-flex align-items-center">
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/favourite" className="btn btn-sm">
+            <RouterLink to="/favourite" className="btn btn-sm">
               <i className="fa h4 fa-heart"></i>
               <sup>
-                <span className="badge text-white bg-danger">3</span>
+                <span className="badge text-white bg-danger">{favoriteCount}</span>
               </sup>
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/notification" className="btn btn-sm">
+            <RouterLink to="/notification" className="btn btn-sm">
               <i className="fa h4 fa-bell"></i>
               <sup>
                 <span className="badge text-white bg-danger">5</span>
               </sup>
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={6} md={6} sm={12} xs={12}>
-            <Link to="http://127.0.0.1:8000/dashboard" className="h4 btn btn-sm poppins-medium">
+            <RouterLink to="http://127.0.0.1:8000/dashboard" className="h4 btn btn-sm poppins-medium">
               DASHBOARD
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-          <Link to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
-            LOGOUT
-          </Link>
+            <RouterLink to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
+              LOGOUT
+            </RouterLink>
           </Col>
 
-          
-
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
-            <Link to="/cart" className="cart-btn btn btn-sm poppins-medium">
+            <RouterLink to="/cart" className="cart-btn btn btn-sm poppins-medium">
               <i className="fa fa-shopping-cart"></i> {cartCount} Items
-            </Link>
+            </RouterLink>
           </Col>
         </div>
       );
-    }   else{
+    } else {
       buttons = (
         <div className="d-flex align-items-center">
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/favourite" className="btn btn-sm">
+            <RouterLink to="/favourite" className="btn btn-sm">
               <i className="fa h4 fa-heart"></i>
               <sup>
-                <span className="badge text-white bg-danger">3</span>
+                <span className="badge text-white bg-danger">{favoriteCount}</span>
               </sup>
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/notification" className="btn btn-sm">
+            <RouterLink to="/notification" className="btn btn-sm">
               <i className="fa h4 fa-bell"></i>
               <sup>
                 <span className="badge text-white bg-danger">5</span>
               </sup>
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/login" className="h4 btn btn-sm poppins-medium">
+            <RouterLink to="/login" className="h4 btn btn-sm poppins-medium">
               LOGIN
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <Link to="/register" className="h4 btn btn-sm poppins-medium">
+            <RouterLink to="/register" className="h4 btn btn-sm poppins-medium">
               REGISTER
-            </Link>
+            </RouterLink>
           </Col>
 
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
-            <Link to="/cart" className="cart-btn btn btn-sm poppins-medium">
+            <RouterLink to="/cart" className="cart-btn btn btn-sm poppins-medium">
               <i className="fa fa-shopping-cart"></i> {cartCount} Items
-            </Link>
+            </RouterLink>
           </Col>
         </div>
       );
     }
-     return (
-      <Fragment >
+
+    return (
+      <Fragment>
         <div className="TopSectionDown">
           {/* Secondary Navbar */}
           <Navbar fixed={"top"} className="navbar" bg="light">
             <Container
-            id="navbar_bar"
+              id="navbar_bar"
               fluid={"true"}
               className="fixed-top p-3 align-items-center"
             >
               <Row className="align-items-center">
                 {/* Logo */}
                 <Col lg={3} md={3} sm={12} xs={12} className="p-0">
-                  <Link to="/" style={{ textDecoration: "none" }}>
-                    {/* <img className="nav-logo" src={Logo} alt="Logo" /> */}
+                  <RouterLink to="/" style={{ textDecoration: "none" }}>
                     <h4
                       className="logo-text poetsen-one-regular"
                       style={{
-                        // color: "#F29F38",
                         textDecoration: "none",
                         display: "flex",
                         fontFamily: "Poetsen One, sans-serif",
                         fontWeight: "700",
                         fontStyle: "normal",
-                        fontSize:"2rem",
-                        paddingLeft:"3rem",
-                        color:"#017D52"
+                        fontSize: "2rem",
+                        paddingLeft: "3rem",
+                        color: "#017D52"
                       }}
                     >
                       Snap<span style={{ color: "#029C66" }}>Buy</span>
                     </h4>
-                  </Link>
+                  </RouterLink>
                 </Col>
 
                 {/* Categories Dropdown */}
@@ -275,16 +289,26 @@ class NavMenuDesktop extends Component {
 
                   {/* What's New */}
                   <Col className="p-0 mt-1" lg={3} md={3} sm={12} xs={12}>
-                    <Link to="/whats-new" className="h4 btn btn-sm poppins-medium">
+                  <ScrollLink
+                      to="newArrivalSection"
+                      className="h4 btn btn-sm poppins-medium"
+                      smooth={true}
+                      duration={500}
+                    >
                       What's New
-                    </Link>
+                    </ScrollLink>
                   </Col>
 
                   {/* Delivery */}
                   <Col className="p-0 mt-1" lg={3} md={3} sm={12} xs={12}>
-                    <Link to="/delivery" className="h4 btn btn-sm poppins-medium">
+                    <ScrollLink
+                      to="iconsSection"
+                      className="h4 btn btn-sm poppins-medium"
+                      smooth={true}
+                      duration={500}
+                    >
                       Delivery
-                    </Link>
+                    </ScrollLink>
                   </Col>
 
                   {/* Search Bar */}

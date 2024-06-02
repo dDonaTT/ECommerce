@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductListController;
+use App\Http\Controllers\Admin\ProductCartController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Middleware\CheckRole;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\ReviewController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -71,5 +74,25 @@ Route::middleware(['auth:sanctum', 'verified', CheckRole::class . ':admin'])->gr
         Route::post('/update/{id}', [SliderController::class, 'UpdateSlider'])->name('slider.update');
         Route::get('/delete/{id}', [SliderController::class, 'DeleteSlider'])->name('slider.delete');
     });
+    Route::get('/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
+    Route::prefix('admin')->group(function () {
+
+        Route::get('/user/profile', [AdminController::class, 'UserProfile'])->name('user.profile');
+    });
+    Route::post('/user/profile/store', [AdminController::class, 'UserProfileStore'])->name('user.profile.store');
+
 
 });
+Route::prefix('order')->group(function () {
+
+    Route::get('/pending', [ProductCartController::class, 'PendingOrder'])->name('pending.order');
+    Route::get('/processing', [ProductCartController::class, 'ProcessingOrder'])->name('processing.order');
+    Route::get('/complete', [ProductCartController::class, 'CompleteOrder'])->name('complete.order');
+    Route::get('/details/{id}', [ProductCartController::class, 'OrderDetails'])->name('order.details');
+    Route::get('/status/processing/{id}', [ProductCartController::class, 'PendingToProcessing'])->name('pending.processing');
+    Route::get('/status/complete/{id}', [ProductCartController::class, 'ProcessingToComplete'])->name('processing.complete');
+
+});
+        Route::get('/delete/{id}', [ReviewController::class, 'DeleteReview'])->name('review.delete');
+        Route::get('/all/review',[ReviewController::class, 'GetAllReview'])->name('all.review');
+        Route::get('/index', [ReviewController::class, 'GetAllReview'])->name('index');

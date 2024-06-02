@@ -4,6 +4,7 @@ import NavMenuDesktop from "../../components/common/NavMenuDesktop";
 import cogoToast from "cogo-toast";
 import AppURL from "../../api/AppURL";
 import "../../assets/css/productDetails.css";
+import ReviewList from "./ReviewList";
 
 const ProductDetails = ({ data, user }) => {
   const { productDetails, productList } = data;
@@ -13,6 +14,7 @@ const ProductDetails = ({ data, user }) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(productList[0]);
+  const [addToFavText, setAddToFavText] = useState("Favourite");
 
   const handleImageClick = (image) => {
     setMainImage(image);
@@ -20,6 +22,30 @@ const ProductDetails = ({ data, user }) => {
 
   const handleQuantityChange = (change) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
+  };
+
+  const addToFav = () => {
+    setAddToFavText("Adding...");
+    let productCode = selectedProduct.product_code;
+    let email = user.email;
+
+    if (!localStorage.getItem('token')) {
+      cogoToast.warn('Please You have to Login First', { position: 'top-right' });
+      setAddToFavText("Favourite");
+    } else {
+      axios.get(AppURL.AddFavourite(productCode, email)).then(response => {
+        if (response.data === 1) {
+          cogoToast.success("Product Added to Favourite", { position: 'top-right' });
+          setAddToFavText("Favourite");
+        } else {
+          cogoToast.error("Your Request is not done! Try Again", { position: 'top-right' });
+          setAddToFavText("Favourite");
+        }
+      }).catch(error => {
+        cogoToast.error("Your Request is not done! Try Again", { position: 'top-right' });
+        setAddToFavText("Favourite");
+      });
+    }
   };
 
   const handleAddToCart = () => {
@@ -174,55 +200,16 @@ const ProductDetails = ({ data, user }) => {
             <button className="add-to-cart" onClick={handleAddToCart}>
               <i className="fa fa-shopping-cart"></i> Add To Cart
             </button>
+            <button onClick={addToFav} className="btn btn-primary m-1">
+              <i className="fa fa-heart"></i> {addToFavText}
+            </button>
           </div>
         </div>
       </div>
       <div className="additional-details poppins-medium">
         <h6 className="mt-2">DETAILS</h6>
         <p>{productDetails[0].long_description}</p>
-        <h6 className="mt-2">REVIEWS</h6>
-        <p className="p-0 m-0">
-          <span className="Review-Title">Kazi Ariyan</span>
-          <span className="text-success">
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-          </span>
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-          nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-          volutpat.
-        </p>
-        <p className="p-0 m-0">
-          <span className="Review-Title">Kazi Ariyan</span>
-          <span className="text-success">
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-          </span>
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-          nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-          volutpat.
-        </p>
-        <p className="p-0 m-0">
-          <span className="Review-Title">Kazi Ariyan</span>
-          <span className="text-success">
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-          </span>
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-          nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-          volutpat.
-        </p>
+        <ReviewList productCode={selectedProduct.product_code} />
       </div>
     </Fragment>
   );

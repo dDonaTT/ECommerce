@@ -7,6 +7,7 @@ import HomeTop from "../components/home/HomeTop";
 import NavMenuDesktop from "../components/common/NavMenuDesktop";
 import Icons from "../components/home/Icons";
 import Footer from "../components/common/Footer";
+import {  Element } from "react-scroll";
 
 class HomePage extends Component {
   render() {
@@ -15,10 +16,15 @@ class HomePage extends Component {
         <NavMenuDesktop />
         <HomeTop />
         <FeaturedProducts />
-        <NewArrival />
+        <Element name="newArrivalSection">
+          <NewArrival />
+        </Element>
+        
         <Category />
         <Collection />
-        <Icons />
+        <Element name="iconsSection">
+          <Icons />
+        </Element>
         <Footer />
       </Fragment>
     );

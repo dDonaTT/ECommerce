@@ -2,17 +2,8 @@ import React, { Component } from "react";
 import { Fragment } from "react";
 import AppURL from "../../api/AppURL";
 import axios from "axios";
-import {
-  Navbar,
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Modal,
-} from "react-bootstrap";
+import { Container, Button, Card, Modal } from "react-bootstrap";
 import cogoToast from "cogo-toast";
-import { useParams } from "react-router";
 
 export class OrderList extends Component {
   constructor() {
@@ -20,7 +11,6 @@ export class OrderList extends Component {
     this.state = {
       ProductData: [],
       show: false,
-
       name: "",
       rating: "",
       comment: "",
@@ -128,9 +118,9 @@ export class OrderList extends Component {
     const MyView = (
       <div className="col-lg-3">
         <div className="ps-lg-3 ps-xl-0">
-          <h1 class="h2 me-3 mb-0">Orders</h1>
+          <h1 className="h2 me-3 mb-0">Orders</h1>
           <div data-filter-list='{"listClass": "orders-list", "sortClass": "orders-sort", "valueNames": ["date", "total"]}'>
-            <table className="table align-middle fs-sm text-nowrap">
+            <table className="table table-bordered align-middle fs-sm text-nowrap text-center">
               <thead>
                 <tr>
                   <th scope="col" className="py-3 ps-0">
@@ -147,6 +137,9 @@ export class OrderList extends Component {
                   </th>
                   <th scope="col" className="py-3 d-none d-md-table-cell">
                     <span className="text-body fw-normal">Payment Method</span>
+                  </th>
+                  <th scope="col" className="py-3 d-none d-md-table-cell">
+                    <span className="text-body fw-normal">Delivery Method</span>
                   </th>
                   <th scope="col" className="py-3 d-none d-md-table-cell">
                     <span className="text-body fw-normal">
@@ -169,8 +162,8 @@ export class OrderList extends Component {
               </thead>
               <tbody className="text-body-emphasis orders-list">
                 {MyList.map((ProductList, i) => (
-                  <tr key={ProductList.id} className="p-5 ">
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                  <tr key={ProductList.id} className="p-5">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       <a
                         className="d-inline-block animate-underline text-body-emphasis text-decoration-none py-2"
                         href="#orderDetails"
@@ -194,34 +187,37 @@ export class OrderList extends Component {
                         </li>
                       </ul>
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.product_name}
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.order_date}
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       <span className="d-flex align-items-center">
                         <span className="bg-info rounded-circle p-1 me-2"></span>
                         {ProductList.order_status}
                       </span>
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.payment_method}
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
+                      {ProductList.delivery_method}
+                    </td>
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.delivery_address} | {ProductList.city}
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.unit_price}$
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.quantity}
                     </td>
-                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0">
+                    <td className="fw-medium pt-2 pb-3 py-md-2 ps-0 border">
                       {ProductList.total_price}$
                     </td>
-                    <td className="py-3 pe-0">
+                    <td className="py-3 pe-0 border">
                       <Button
                         onClick={this.ReviewModalOpen.bind(
                           this,
@@ -249,15 +245,7 @@ export class OrderList extends Component {
             <h2>Order History By ( {email} )</h2>
           </div>
           <Card>
-            <Card.Body>
-              {/* <Row> */}
-              {/* <div class="col-md-4 col-xl-6 mb-3 mb-md-0"> */}
-
-              {MyView}
-
-              {/* </div> */}
-              {/* </Row> */}
-            </Card.Body>
+            <Card.Body>{MyView}</Card.Body>
           </Card>
         </Container>
         <Modal show={this.state.ReviewModal} onHide={this.ReviewModalClose}>

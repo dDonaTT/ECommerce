@@ -16,10 +16,12 @@ class UserController extends Controller
     }
 
     public function GetAllUser()
-    {
-        $users = User::latest()->get();
-        return view('backend.user.user_view', compact('users'));
-    }
+{
+    $users = User::latest()->get();
+    $userCount = User::count();
+    return view('backend.user.user_view', compact('users', 'userCount'));
+}
+
 
     public function AddUser()
     {
@@ -96,21 +98,5 @@ class UserController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    // public function UpdateUserRole(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'role' => 'required|in:admin,user,manager',
-    //     ]);
 
-    //     $user = User::findOrFail($id);
-    //     $user->role = $request->role;
-    //     $user->save();
-
-    //     $notification = [
-    //         'message' => 'User role updated successfully',
-    //         'alert-type' => 'success'
-    //     ];
-
-    //     return redirect()->route('all.user')->with($notification);
-    // }
 }

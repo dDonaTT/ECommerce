@@ -102,10 +102,12 @@ class ProductCartController extends Controller
 
     }
 
-    public function CartOrder(Request $request){
+    public function CartOrder(Request $request)
+    {
         try {
             $city = $request->input('city');
             $payment_method = $request->input('payment_method');
+            $delivery_method = $request->input('delivery_method');
             $name = $request->input('name');
             $email = $request->input('email');
             $delivery_address = $request->input('delivery_address');
@@ -122,7 +124,7 @@ class ProductCartController extends Controller
 
             foreach ($cartList as $cartListItem) {
                 $resultInsert = CartOrder::insert([
-                    'invoice_no' => "Easy".$invoice_no,
+                    'invoice_no' => "Easy" . $invoice_no,
                     'product_name' => $cartListItem['product_name'],
                     'product_code' => $cartListItem['product_code'],
                     'size' => $cartListItem['size'],
@@ -133,6 +135,8 @@ class ProductCartController extends Controller
                     'email' => $cartListItem['email'],
                     'name' => $name,
                     'payment_method' => $payment_method,
+                    'delivery_method' => $delivery_method,
+
                     'delivery_address' => $delivery_address,
                     'city' => $city,
                     'delivery_charge' => $delivery_charge,
@@ -159,9 +163,69 @@ class ProductCartController extends Controller
     }
 
 
-    public function OrderListByUser(Request $request){
+    public function OrderListByUser(Request $request)
+    {
         $email = $request->email;
-        $result = CartOrder::where('email',$email)->orderBy('id','DESC')->get();
+        $result = CartOrder::where('email', $email)->orderBy('id', 'DESC')->get();
         return $result;
+    }
+    public function PendingOrder()
+    {
+
+        $orders = CartOrder::where('order_status', 'Pending')->orderBy('id', 'DESC')->get();
+        return view('backend.order.pending_orders', compact('orders'));
+
+    }
+    public function ProcessingOrder()
+    {
+
+        $orders = CartOrder::where('order_status', 'Processing')->orderBy('id', 'DESC')->get();
+        return view('backend.order.processing_orders', compact('orders'));
+
+    } // End Method
+
+
+    public function CompleteOrder()
+    {
+
+        $orders = CartOrder::where('order_status', 'Complete')->orderBy('id', 'DESC')->get();
+        return view('backend.order.complete_orders', compact('orders'));
+
+    }
+    public function OrderDetails($id)
+    {
+
+        $order = CartOrder::findOrFail($id);
+        return view('backend.order.order_details', compact('order'));
+
+
+    }
+    public function PendingToProcessing($id)
+    {
+
+        CartOrder::findOrFail($id)->update(['order_status' => 'Processing']);
+
+        $notification = array(
+            'message' => 'Order Processing Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('pending.order')->with($notification);
+
+    }
+
+
+    public function ProcessingToComplete($id)
+    {
+
+        CartOrder::findOrFail($id)->update(['order_status' => 'Complete']);
+
+        $notification = array(
+            'message' => 'Order Complete Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('processing.order')->with($notification);
+
     }
 }

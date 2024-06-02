@@ -20,7 +20,7 @@ class ReviewController extends Controller
 
     public function PostReview(Request $request)
     {
-        // Log the incoming request data
+
         \Log::info('PostReview Request', $request->all());
 
         try {
@@ -47,8 +47,23 @@ class ReviewController extends Controller
         }
     }
 
-    // End Method
+    public function GetAllReview(){
 
+        $review = ProductReviews::latest()->get();
+       return view('backend.review.review_all', compact('review'));
+   }
+   public function DeleteReview($id){
+
+    ProductReviews::findOrFail($id)->delete();
+
+    $notification = array(
+        'message' => 'Review Deleted Successfully',
+        'alert-type' => 'Success'
+    );
+
+    return redirect()->back()->with($notification);
+
+}
 
 
 

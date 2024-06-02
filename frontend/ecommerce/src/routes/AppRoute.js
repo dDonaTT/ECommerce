@@ -20,6 +20,7 @@ import RegisterPage from "../pages/RegisterPage";
 import OrderListPage from "../pages/OrderListPage";
 import ProtectedRoute from "./ProtectedRoute";
 import CartOrderPage from "../pages/CartOrderPage";
+import NewArrival from "../components/home/NewArrival";
 
 class AppRoute extends Component {
   constructor() {
@@ -78,6 +79,8 @@ class AppRoute extends Component {
               }
             />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/whats-new" element={<NewArrival />} />
+
             <Route path="/purchase" element={<PurchasePage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/refund" element={<RefundPage />} />
@@ -86,7 +89,7 @@ class AppRoute extends Component {
               element={<ProductDetailsPage user={this.state.user} />}
             />
             <Route path="/notification" element={<NotificationPage />} />
-            <Route path="/favorite" element={<FavouritePage />} />
+            <Route path="/favourite" element={<FavouritePage user={this.state.user}/> }/>
             <Route
               path="/orderlist"
               element={<OrderListPage user={this.state.user} />}
