@@ -66,6 +66,9 @@ static FavouriteRemove(product_code,email){
 static ReviewList(code){
   return this.BaseURL+"/reviewlist/"+code;
 }
+static ProductBySearch(searchkey){
+  return this.BaseURL+"/search/"+searchkey;
+}
 }
 
 export default AppURL;

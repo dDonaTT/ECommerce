@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Navbar, Container, Row, Col, Button, Dropdown } from "react-bootstrap";
 import { Link as RouterLink } from "react-router-dom";
+
 import { Link as ScrollLink, Element } from "react-scroll";
 import axios from "axios";
 import AppURL from "../../api/AppURL";
@@ -16,8 +17,10 @@ class NavMenuDesktop extends Component {
     this.state = {
       MenuData: [],
       cartCount: 0,
-      favoriteCount: 0, // State for favorite count
+      favoriteCount: 0,
+     
     };
+    
   }
 
   componentDidMount() {
@@ -42,7 +45,9 @@ class NavMenuDesktop extends Component {
       axios
         .get(AppURL.CartList(email))
         .then((response) => {
-          const uniqueProductCodes = new Set(response.data.map(item => item.product_code));
+          const uniqueProductCodes = new Set(
+            response.data.map((item) => item.product_code)
+          );
           console.log(uniqueProductCodes);
           this.setState({ cartCount: uniqueProductCodes.size });
         })
@@ -51,6 +56,7 @@ class NavMenuDesktop extends Component {
         });
     }
   };
+
 
   fetchFavoriteCount = () => {
     const email = localStorage.getItem("user_email");
@@ -66,16 +72,23 @@ class NavMenuDesktop extends Component {
     }
   };
 
-  MenuItemClick = (event) => {
+  MenuItemClick = (event, category, subcategory) => {
     event.preventDefault();
     event.stopPropagation();
 
+    if (subcategory) {
+      const url = `/productsubcategory/${category}/${subcategory}`;
+      window.location.href = url;
+    }
+
     event.target.classList.toggle("active");
     var panel = event.target.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
+    if (panel) {
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
     }
   };
 
@@ -83,14 +96,19 @@ class NavMenuDesktop extends Component {
     const { MenuData, cartCount, favoriteCount } = this.state;
     let buttons;
 
-    if (localStorage.getItem("token") && localStorage.getItem("role") === 'user' ) {
+    if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("role") === "user"
+    ) {
       buttons = (
         <div className="d-flex align-items-center">
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
             <RouterLink to="/favourite" className="btn btn-sm">
               <i className="fa h4 fa-heart"></i>
               <sup>
-                <span className="badge text-white bg-danger">{favoriteCount}</span>
+                <span className="badge text-white bg-danger">
+                  {favoriteCount}
+                </span>
               </sup>
             </RouterLink>
           </Col>
@@ -107,25 +125,34 @@ class NavMenuDesktop extends Component {
           <RouterLink to="/profile" className="h4 btn btn-sm poppins-medium">
             PROFILE
           </RouterLink>
-          <RouterLink to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
+          <RouterLink
+            to="/"
+            onClick={this.logout}
+            className="h4 btn btn-sm poppins-medium"
+          >
             LOGOUT
           </RouterLink>
 
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
-            <RouterLink to="/cart" className="cart-btn btn btn-sm poppins-medium">
+            <RouterLink
+              to="/cart"
+              className="cart-btn btn btn-sm poppins-medium"
+            >
               <i className="fa fa-shopping-cart"></i> {cartCount} Items
             </RouterLink>
           </Col>
         </div>
       );
-    } else if(localStorage.getItem("role") === 'admin' ) {
+    } else if (localStorage.getItem("role") === "admin") {
       buttons = (
         <div className="d-flex align-items-center">
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
             <RouterLink to="/favourite" className="btn btn-sm">
               <i className="fa h4 fa-heart"></i>
               <sup>
-                <span className="badge text-white bg-danger">{favoriteCount}</span>
+                <span className="badge text-white bg-danger">
+                  {favoriteCount}
+                </span>
               </sup>
             </RouterLink>
           </Col>
@@ -140,19 +167,29 @@ class NavMenuDesktop extends Component {
           </Col>
 
           <Col className="p-0 mt-1" lg={6} md={6} sm={12} xs={12}>
-            <RouterLink to="http://127.0.0.1:8000/dashboard" className="h4 btn btn-sm poppins-medium">
+            <RouterLink
+              to="http://127.0.0.1:8000/dashboard"
+              className="h4 btn btn-sm poppins-medium"
+            >
               DASHBOARD
             </RouterLink>
           </Col>
 
           <Col className="p-0 mt-1" lg={4} md={4} sm={12} xs={12}>
-            <RouterLink to="/" onClick={this.logout} className="h4 btn btn-sm poppins-medium">
+            <RouterLink
+              to="/"
+              onClick={this.logout}
+              className="h4 btn btn-sm poppins-medium"
+            >
               LOGOUT
             </RouterLink>
           </Col>
 
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
-            <RouterLink to="/cart" className="cart-btn btn btn-sm poppins-medium">
+            <RouterLink
+              to="/cart"
+              className="cart-btn btn btn-sm poppins-medium"
+            >
               <i className="fa fa-shopping-cart"></i> {cartCount} Items
             </RouterLink>
           </Col>
@@ -165,7 +202,9 @@ class NavMenuDesktop extends Component {
             <RouterLink to="/favourite" className="btn btn-sm">
               <i className="fa h4 fa-heart"></i>
               <sup>
-                <span className="badge text-white bg-danger">{favoriteCount}</span>
+                <span className="badge text-white bg-danger">
+                  {favoriteCount}
+                </span>
               </sup>
             </RouterLink>
           </Col>
@@ -192,7 +231,10 @@ class NavMenuDesktop extends Component {
           </Col>
 
           <Col className="p-0" lg={5} md={5} sm={12} xs={12}>
-            <RouterLink to="/cart" className="cart-btn btn btn-sm poppins-medium">
+            <RouterLink
+              to="/cart"
+              className="cart-btn btn btn-sm poppins-medium"
+            >
               <i className="fa fa-shopping-cart"></i> {cartCount} Items
             </RouterLink>
           </Col>
@@ -224,7 +266,7 @@ class NavMenuDesktop extends Component {
                         fontStyle: "normal",
                         fontSize: "2rem",
                         paddingLeft: "3rem",
-                        color: "#017D52"
+                        color: "#017D52",
                       }}
                     >
                       Snap<span style={{ color: "#029C66" }}>Buy</span>
@@ -248,7 +290,11 @@ class NavMenuDesktop extends Component {
                     xs={12}
                   >
                     <Dropdown>
-                      <Dropdown.Toggle variant="light" id="dropdown-basic" className="poppins-medium ">
+                      <Dropdown.Toggle
+                        variant="light"
+                        id="dropdown-basic"
+                        className="poppins-medium "
+                      >
                         Category
                       </Dropdown.Toggle>
 
@@ -257,15 +303,27 @@ class NavMenuDesktop extends Component {
                         <h5 className="poppins-medium">Popular Categories</h5>
                         {MenuData.map((category, index) => (
                           <Dropdown.Item key={index}>
+                            {/* Use button wrapper with the accordion class */}
                             <button
-                              onClick={this.MenuItemClick}
                               className="accordion"
+                              onClick={(event) =>
+                                this.MenuItemClick(
+                                  event,
+                                  category.category_name,
+                                  null
+                                )
+                              }
                             >
-                              <img
-                                className="accordionMenuIcon"
-                                src={category.category_image}
-                              />
-                              &nbsp; {category.category_name}
+                              <a
+                                href="#"
+                                onClick={(event) => event.preventDefault()} 
+                              >
+                                <img
+                                  className="accordionMenuIcon"
+                                  src={category.category_image}
+                                />
+                                &nbsp; {category.category_name}
+                              </a>
                             </button>
                             <div className="panel">
                               <ul>
@@ -273,9 +331,26 @@ class NavMenuDesktop extends Component {
                                   category.subcategory_name.map(
                                     (subcategory, idx) => (
                                       <li key={idx}>
-                                        <a href="#" className="accordionItem">
-                                          {subcategory.subcategory_name}{" "}
-                                        </a>
+                                        
+                                        <button
+                                          className="accordionItem"
+                                          onClick={(event) =>
+                                            this.MenuItemClick(
+                                              event,
+                                              category.category_name,
+                                              subcategory.subcategory_name
+                                            )
+                                          }
+                                        >
+                                          <a
+                                            href="#"
+                                            onClick={(event) =>
+                                              event.preventDefault()
+                                            }
+                                          >
+                                            {subcategory.subcategory_name}{" "}
+                                          </a>
+                                        </button>
                                       </li>
                                     )
                                   )}
@@ -289,7 +364,7 @@ class NavMenuDesktop extends Component {
 
                   {/* What's New */}
                   <Col className="p-0 mt-1" lg={3} md={3} sm={12} xs={12}>
-                  <ScrollLink
+                    <ScrollLink
                       to="newArrivalSection"
                       className="h4 btn btn-sm poppins-medium"
                       smooth={true}
@@ -320,6 +395,7 @@ class NavMenuDesktop extends Component {
                     xs={12}
                     style={{ width: "15rem" }}
                   >
+                    
                     <div className="input-group w-100">
                       <input placeholder="Search Product" type="text" className="form-control poppins-medium" />
                       <Button type="button" className="btn site-btn">

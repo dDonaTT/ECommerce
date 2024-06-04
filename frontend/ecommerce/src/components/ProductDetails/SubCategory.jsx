@@ -3,18 +3,20 @@ import { Container, Row, Col, Card, Breadcrumb, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import HeadPhones from "../../assets/images/Best Headphones.jpg";
 
-class Category extends Component {
+class SubCategory extends Component {
+  // Function to capitalize the first letter of a string
   capitalizeFirstLetter = (string) => {
-    if (!string || typeof string !== 'string') {
-      return '';
-    }
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-  
+     if (!string || typeof string !== 'string') {
+       return '';
+     }
+     return string.charAt(0).toUpperCase() + string.slice(1);
+   }
+   
+
   render() {
-    const MyList = this.props.ProductData || [];
-    const Category = this.props.Category;
-    const capitalizedCategory = this.capitalizeFirstLetter(Category);
+    const MyList = this.props.ProductData;
+    const Category = this.capitalizeFirstLetter(this.props.Category);
+    const SubCategory = this.capitalizeFirstLetter(this.props.SubCategory);
 
     const MyView = MyList.map((ProductList, i) => {
       if (ProductList.special_price === "na") {
@@ -79,15 +81,29 @@ class Category extends Component {
                 <Link to="/">Home</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
-                <Link to={"/productcategory/" + Category}>
-                  {capitalizedCategory}
+                <Link to={"/productcategory/" + this.props.Category}>
+                  {Category}
+                </Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link
+                  to={
+                    "/productsubcategory/" +
+                    this.props.Category +
+                    "/" +
+                    this.props.SubCategory
+                  }
+                >
+                  {SubCategory}
                 </Link>
               </Breadcrumb.Item>
             </Breadcrumb>
           </Navbar>
 
           <div className="section-title text-center mb-40 mt-2">
-            <h2>{capitalizedCategory}</h2>
+            <h2>
+              {Category} / {SubCategory}
+            </h2>
           </div>
 
           <Row>{MyView}</Row>
@@ -118,4 +134,4 @@ class Category extends Component {
   }
 }
 
-export default Category;
+export default SubCategory;

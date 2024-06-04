@@ -50,6 +50,7 @@ Route::get('/allproduct', [ProductListController::class, 'AllProducts']);
 Route::get('/productlistbyremark/{remark}', [ProductListController::class, 'ProductListByRemark']);
 Route::get('/productlistbycategory/{category}', [ProductListController::class, 'ProductListByCategory']);
 Route::get('/productlistbysubcategory/{category}/{subcategory}', [ProductListController::class, 'ProductListBySubCategory']);
+Route::get('/search/{key}', [ProductListController::class, 'ProductBySearch']);
 
 Route::get('/productdetails/{id}', [ProductDetailsController::class, 'ProductDetails']);
 

@@ -8,6 +8,7 @@ import NavMenuDesktop from "../components/common/NavMenuDesktop";
 import Icons from "../components/home/Icons";
 import Footer from "../components/common/Footer";
 import {  Element } from "react-scroll";
+import Discount from "../components/home/Discount";
 
 class HomePage extends Component {
   render() {
@@ -19,8 +20,7 @@ class HomePage extends Component {
         <Element name="newArrivalSection">
           <NewArrival />
         </Element>
-        
-        <Category />
+        <Discount/>
         <Collection />
         <Element name="iconsSection">
           <Icons />
