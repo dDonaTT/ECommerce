@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
 import AppURL from "../../api/AppURL";
 import axios from "axios";
 import cogoToast from "cogo-toast";
@@ -128,9 +128,30 @@ class Cart extends Component {
   render() {
     const { ProductData, isLoading } = this.state;
     const { subtotal, shippingCost, tax, total } = this.calculateSummary();
+    let email = localStorage.getItem("user_email");
 
     if (isLoading) {
-      return <div>Loading...</div>;
+      return (
+        <Col
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "50vh" }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </Col>
+      );
+    }
+
+    if(email === null){
+      return (
+        <Col
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "50vh" }}
+        >
+          <Link to={"/login"}> Login First
+          </Link>
+         
+        </Col>
+      );
     }
 
     return (

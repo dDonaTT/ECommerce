@@ -316,6 +316,7 @@ class NavMenuDesktop extends Component {
                             >
                               <a
                                 href="#"
+                                style={{ textDecoration: "none" , color: "black"}}
                                 onClick={(event) => event.preventDefault()} 
                               >
                                 <img
@@ -334,6 +335,7 @@ class NavMenuDesktop extends Component {
                                         
                                         <button
                                           className="accordionItem"
+                                          style={{ textDecoration: "none" , border:"none", background:"none"}}
                                           onClick={(event) =>
                                             this.MenuItemClick(
                                               event,
@@ -342,7 +344,7 @@ class NavMenuDesktop extends Component {
                                             )
                                           }
                                         >
-                                          <a
+                                          <a style={{ textDecoration: "none", color: "black" }}
                                             href="#"
                                             onClick={(event) =>
                                               event.preventDefault()

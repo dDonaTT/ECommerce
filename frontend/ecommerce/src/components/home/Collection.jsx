@@ -26,33 +26,49 @@ class Collection extends Component {
     const MyView = CollectionList.map((product, i) => {
       if (product.special_price === "na") {
         return (
-          <Col key={i} className="p-2" xl={3} lg={3} md={4} sm={6} xs={12}>
-            <Link to={"/productdetails/" + product.id}>
-              <Card className="image-box card w-100">
-                <img className="center w-75" src={product.image} alt={product.title} />
-                <Card.Body>
-                  <p className="product-name-on-card">{product.title}</p>
-                  <p className="product-price-on-card">Price : ${product.price}</p>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
+        <Col key={i.toString()} className="p-2" xl={2} lg={3} md={4} sm={4} xs={10}>
+          <Link to={"/productdetails/" + product.id} style={{ textDecoration: 'none' }}>
+            <Card className="product-card">
+              <div className="image-container">
+                <img className="center product-image" src={product.image} alt={product.title} />
+                <button className="favorite-button">❤️</button>
+              </div>
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h3 className="product-name">{product.title}</h3>
+                    <span className="product-price">${product.price}</span>
+                  </div>
+                  <p className="product-rating">⭐ {product.rating?.rate}</p>
+                </div>
+                <button className="add-to-cart">Add to Cart</button>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
         );
       } else {
         return (
-          <Col key={i} className="p-2" xl={3} lg={3} md={4} sm={6} xs={12}>
-            <Link to={"/productdetails/" + product.id}>
-              <Card className="image-box card w-100">
-                <img className="center w-75" src={product.image} alt={product.title} />
-                <Card.Body>
-                  <p className="product-name-on-card">{product.title}</p>
-                  <p className="product-price-on-card">
-                    Price : <strike className="text-secondary">${product.price}</strike> ${product.special_price}
-                  </p>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
+        <Col key={i.toString()} className="p-2" xl={2} lg={3} md={4} sm={4} xs={10}>
+          <Link to={"/productdetails/" + product.id} style={{ textDecoration: 'none' }}>
+            <Card className="product-card">
+              <div className="image-container">
+                <img className="center product-image" src={product.image} alt={product.title} />
+                <button className="favorite-button">❤️</button>
+              </div>
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h3 className="product-name">{product.title}</h3>
+                    <span className="product-price">${product.price}</span>
+                  </div>
+                  <p className="product-rating">⭐ {product.rating?.rate}</p>
+                </div>
+                <button className="add-to-cart">Add to Cart</button>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
         );
       }
     });

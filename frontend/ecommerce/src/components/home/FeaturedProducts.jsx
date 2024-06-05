@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Col, Container, Row, Card } from "react-bootstrap";
+import { Col, Container, Row, Card, Spinner } from "react-bootstrap";
 import AppURL from "../../api/AppURL";
 import axios from "axios";
 import { Link } from 'react-router-dom'
@@ -9,6 +9,7 @@ class FeaturedProducts extends Component {
     super();
     this.state = {
       ProductData: [],
+      isLoading:true
     };
   }
 
@@ -16,6 +17,7 @@ class FeaturedProducts extends Component {
     axios.get(AppURL.ProductListByRemark("FEATURED")).then((response) => {
         this.setState({ ProductData: response.data });
         console.log({ ProductData: response.data });
+        this.setState({isLoading: false});
       })
       .catch((error) => {
         console.log(error);
@@ -25,6 +27,18 @@ class FeaturedProducts extends Component {
   render() {
 
     const prodList = this.state.ProductData;
+    const { isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <Col
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "50vh" }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </Col>
+      );
+    }
 
     const View = prodList.map((prodList, i) => {
       return (

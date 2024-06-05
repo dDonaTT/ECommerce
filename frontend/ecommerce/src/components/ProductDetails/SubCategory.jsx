@@ -1,10 +1,32 @@
 import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Card, Breadcrumb, Navbar } from "react-bootstrap";
+import { Container, Row, Col, Card, Breadcrumb, Navbar, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import HeadPhones from "../../assets/images/Best Headphones.jpg";
 
 class SubCategory extends Component {
-  // Function to capitalize the first letter of a string
+
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true,
+      ProductData: []
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    setTimeout(() => {
+      this.setState({
+        ProductData: this.props.ProductData,
+        isLoading: false
+      });
+    }, 4000); 
+  };
+
+
   capitalizeFirstLetter = (string) => {
      if (!string || typeof string !== 'string') {
        return '';
@@ -17,57 +39,54 @@ class SubCategory extends Component {
     const MyList = this.props.ProductData;
     const Category = this.capitalizeFirstLetter(this.props.Category);
     const SubCategory = this.capitalizeFirstLetter(this.props.SubCategory);
+    const { isLoading } = this.state;
 
     const MyView = MyList.map((ProductList, i) => {
       if (ProductList.special_price === "na") {
         return (
-          <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6} key={i}>
-            <Link
-              className="text-link"
-              to={"/productdetails/" + ProductList.id}
-            >
-              <Card className="image-box card w-100">
-                <img
-                  className="center w-75"
-                  src={ProductList.image}
-                  alt={ProductList.title}
-                />
-                <Card.Body>
-                  <p className="product-name-on-card">{ProductList.title}</p>
-                  <p className="product-price-on-card">
-                    Price : ${ProductList.price}
-                  </p>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
+          <Col key={i.toString()} className="p-2" xl={2} lg={3} md={4} sm={4} xs={10}>
+          <Link to={"/productdetails/" + ProductList.id} style={{ textDecoration: 'none' }}>
+            <Card className="product-card">
+              <div className="image-container">
+                <img className="center product-image" src={ProductList.image} alt={ProductList.title} />
+                <button className="favorite-button">❤️</button>
+              </div>
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h3 className="product-name">{ProductList.title}</h3>
+                    <span className="product-price">${ProductList.price}</span>
+                  </div>
+                  <p className="product-rating">⭐ {ProductList.rating?.rate}</p>
+                </div>
+                <button className="add-to-cart">Add to Cart</button>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
         );
       } else {
         return (
-          <Col className="p-0" xl={3} lg={3} md={3} sm={6} xs={6} key={i}>
-            <Link
-              className="text-link"
-              to={"/productdetails/" + ProductList.id}
-            >
-              <Card className="image-box card w-100">
-                <img
-                  className="center w-75"
-                  src={ProductList.image}
-                  alt={ProductList.title}
-                />
-                <Card.Body>
-                  <p className="product-name-on-card">{ProductList.title}</p>
-                  <p className="product-price-on-card">
-                    Price :{" "}
-                    <strike className="text-secondary">
-                      ${ProductList.price}
-                    </strike>{" "}
-                    ${ProductList.special_price}
-                  </p>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
+          <Col key={i.toString()} className="p-2" xl={2} lg={3} md={4} sm={4} xs={10}>
+          <Link to={"/productdetails/" + ProductList.id} style={{ textDecoration: 'none' }}>
+            <Card className="product-card">
+              <div className="image-container">
+                <img className="center product-image" src={ProductList.image} alt={ProductList.title} />
+                <button className="favorite-button">❤️</button>
+              </div>
+              <Card.Body>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h3 className="product-name">{ProductList.title}</h3>
+                    <span className="product-price">${ProductList.price}</span>
+                  </div>
+                  <p className="product-rating">⭐ {ProductList.rating?.rate}</p>
+                </div>
+                <button className="add-to-cart">Add to Cart</button>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
         );
       }
     });
@@ -106,7 +125,15 @@ class SubCategory extends Component {
             </h2>
           </div>
 
-          <Row>{MyView}</Row>
+          <Row>
+          {isLoading ? (
+              <Col className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+                <Spinner animation="border" variant="primary" />
+              </Col>
+            ) : (
+              MyView
+            )}
+            </Row>
         </Container>
         <div className="body">
           <div className="wrapper">
