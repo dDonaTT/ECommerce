@@ -38,11 +38,22 @@ class ProductListController extends Controller
         return $productlist;
     }
 
-    public function GetAllProduct()
+    public function GetAllProduct(Request $request)
     {
-        $products = ProductList::latest()->paginate(5);
+        $query = ProductList::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('product_code', 'like', '%' . $search . '%')
+                ->orWhere('category', 'like', '%' . $search . '%');
+        }
+
+        $products = $query->latest()->paginate(5);
+
         return view('backend.product.product_all', compact('products'));
     }
+
 
     public function AddProduct()
     {
@@ -230,9 +241,10 @@ class ProductListController extends Controller
         );
         return redirect()->back()->with($notification);
     }
-    public function ProductBySearch(Request $request){
-        $key=$request->key;
-        $productlist=ProductList::where('title','LIKE',"%{key}%")->orWhere('brand','LIKE',"%{key}%")->get();
+    public function ProductBySearch(Request $request)
+    {
+        $key = $request->key;
+        $productlist = ProductList::where('title', 'LIKE', "%{key}%")->orWhere('brand', 'LIKE', "%{key}%")->get();
         return $productlist;
     }
 }

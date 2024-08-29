@@ -15,11 +15,12 @@ use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
-    public function AllCategory(){
+    public function AllCategory()
+    {
         $categories = Category::all();
-        $categoryDetailsArray= [];
+        $categoryDetailsArray = [];
         foreach ($categories as $value) {
-            $subcategory = SubCategory::where('category_name',$value['category_name'])->get();
+            $subcategory = SubCategory::where('category_name', $value['category_name'])->get();
             $item = [
                 'category_name' => $value['category_name'],
                 'category_image' => $value['category_image'],
@@ -27,25 +28,35 @@ class CategoryController extends Controller
 
 
             ];
-            array_push($categoryDetailsArray,$item);
+            array_push($categoryDetailsArray, $item);
         }
         return $categoryDetailsArray;
     }
 
-    public function GetAllCategory(){
+    public function GetAllCategory(Request $request)
+    {
+        $query = Category::query();
 
-        $category = Category::latest()->get();
-        return view('backend.category.category_view',compact('category'));
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('category_name', 'like', '%' . $search . '%');
+        }
 
+        $category = $query->latest()->get();
+
+        return view('backend.category.category_view', compact('category'));
     }
 
-    public function AddCategory(){
+
+    public function AddCategory()
+    {
 
         return view('backend.category.category_add');
 
     }
 
-    public function StoreCategory(Request $request){
+    public function StoreCategory(Request $request)
+    {
 
         $request->validate([
             'category_name' => 'required',
@@ -55,14 +66,14 @@ class CategoryController extends Controller
             'category_image.required' => 'Category image is required',
         ]);
 
-        if($request->file('category_image')){
+        if ($request->file('category_image')) {
             $manager = new ImageManager(new Driver());
-            $name_gen = hexdec(uniqid()).'.'.$request->file('category_image')->getClientOriginalExtension();
+            $name_gen = hexdec(uniqid()) . '.' . $request->file('category_image')->getClientOriginalExtension();
             $img = $manager->read($request->file('category_image'));
-            $img = $img->resize(128,128);
+            $img = $img->resize(128, 128);
 
-            $img->toJpeg(80)->save(base_path('public/upload/category/'.$name_gen));
-            $save_url = 'http://127.0.0.1:8000/upload/category/'.$name_gen;
+            $img->toJpeg(80)->save(base_path('public/upload/category/' . $name_gen));
+            $save_url = 'http://127.0.0.1:8000/upload/category/' . $name_gen;
 
             Category::insert([
                 'category_name' => $request->category_name,
@@ -80,14 +91,16 @@ class CategoryController extends Controller
 
     }
 
-    public function EditCategory($id){
+    public function EditCategory($id)
+    {
 
         $category = Category::findOrFail($id);
-        return view('backend.category.category_edit',compact('category'));
+        return view('backend.category.category_edit', compact('category'));
 
     }
 
-    public function UpdateCategory(Request $request){
+    public function UpdateCategory(Request $request)
+    {
 
         $request->validate([
             'category_name' => 'required',
@@ -102,12 +115,12 @@ class CategoryController extends Controller
         if ($request->file('category_image')) {
 
             $manager = new ImageManager(new Driver());
-            $name_gen = hexdec(uniqid()).'.'.$request->file('category_image')->getClientOriginalExtension();
+            $name_gen = hexdec(uniqid()) . '.' . $request->file('category_image')->getClientOriginalExtension();
             $img = $manager->read($request->file('category_image'));
-            $img = $img->resize(128,128);
+            $img = $img->resize(128, 128);
 
-            $img->toJpeg(80)->save(base_path('public/upload/category/'.$name_gen));
-            $save_url = 'http://127.0.0.1:8000/upload/category/'.$name_gen;
+            $img->toJpeg(80)->save(base_path('public/upload/category/' . $name_gen));
+            $save_url = 'http://127.0.0.1:8000/upload/category/' . $name_gen;
 
             Category::findOrFail($category_id)->update([
                 'category_name' => $request->category_name,
@@ -120,8 +133,7 @@ class CategoryController extends Controller
             ];
 
             return redirect()->route('all.category')->with($notification);
-        }
-        else {
+        } else {
             Category::findOrFail($category_id)->update([
                 'category_name' => $request->category_name,
             ]);
@@ -136,7 +148,8 @@ class CategoryController extends Controller
     }
 
 
-    public function DeleteCategory($id){
+    public function DeleteCategory($id)
+    {
 
         Category::findOrFail($id)->delete();
 
@@ -148,92 +161,96 @@ class CategoryController extends Controller
         return redirect()->back()->with($notification);
 
     }
+    public function GetAllSubCategory(Request $request)
+{
+    $query = Subcategory::query();
 
-    // Start Sub Category All Methods.
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where('subcategory_name', 'like', '%' . $search . '%')
+              ->orWhere('category_name', 'like', '%' . $search . '%');
+    }
 
+    $sub_categories = $query->latest()->get();
 
-    public function GetAllSubCategory(){
-        $sub_categories = Subcategory::latest()->get();
-             return view('backend.subcategory.subcategory_view',compact('sub_categories'));
+    return view('backend.subcategory.subcategory_view', compact('sub_categories'));
+}
 
-         }
+    public function AddSubCategory()
+    {
 
-
-         public function AddSubCategory(){
-
-             $category = Category::latest()->get();
-              return view('backend.subcategory.subcategory_add',compact('category'));
-         }
-
-
-         public function StoreSubCategory(Request $request){
-
-
-             $request->validate([
-                 'subcategory_name' => 'required',
-             ],[
-                 'subcategory_name.required' => 'Input SubCategory Name'
-
-             ]);
+        $category = Category::latest()->get();
+        return view('backend.subcategory.subcategory_add', compact('category'));
+    }
 
 
+    public function StoreSubCategory(Request $request)
+    {
+        $request->validate([
+            'subcategory_name' => 'required',
+        ], [
+            'subcategory_name.required' => 'Input SubCategory Name'
 
-             Subcategory::insert([
-                 'category_name' => $request->category_name,
-                 'subcategory_name' => $request->subcategory_name,
-             ]);
+        ]);
+        Subcategory::insert([
+            'category_name' => $request->category_name,
+            'subcategory_name' => $request->subcategory_name,
+        ]);
 
-             $notification = array(
-                 'message' => 'SubCategory Inserted Successfully',
-                 'alert-type' => 'success'
-             );
+        $notification = array(
+            'message' => 'SubCategory Inserted Successfully',
+            'alert-type' => 'success'
+        );
 
-             return redirect()->route('all.subcategory')->with($notification);
+        return redirect()->route('all.subcategory')->with($notification);
 
-         }
-
-
-         public function EditSubCategory($id){
-
-             $category = Category::orderBy('category_name','ASC')->get();
-             $subcategory = Subcategory::findOrFail($id);
-             return view('backend.subcategory.subcategory_edit',compact('category','subcategory'));
-
-         }
-
-         public function UpdateSubCategory(Request $request){
-
-             $subcategory_id = $request->id;
-
-             Subcategory::findOrFail($subcategory_id)->update([
-                 'category_name' => $request->category_name,
-                 'subcategory_name' => $request->subcategory_name,
-             ]);
-
-             $notification = array(
-                 'message' => 'SubCategory Updated Successfully',
-                 'alert-type' => 'success'
-             );
-
-             return redirect()->route('all.subcategory')->with($notification);
-
-         }
+    }
 
 
-         public function DeleteSubCategory($id){
+    public function EditSubCategory($id)
+    {
 
-             Subcategory::findOrFail($id)->delete();
-              $notification = array(
-                 'message' => 'SubCategory Deleted Successfully',
-                 'alert-type' => 'success'
-             );
+        $category = Category::orderBy('category_name', 'ASC')->get();
+        $subcategory = Subcategory::findOrFail($id);
+        return view('backend.subcategory.subcategory_edit', compact('category', 'subcategory'));
 
-             return redirect()->back()->with($notification);
+    }
 
-         }
+    public function UpdateSubCategory(Request $request)
+    {
+
+        $subcategory_id = $request->id;
+
+        Subcategory::findOrFail($subcategory_id)->update([
+            'category_name' => $request->category_name,
+            'subcategory_name' => $request->subcategory_name,
+        ]);
+
+        $notification = array(
+            'message' => 'SubCategory Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.subcategory')->with($notification);
+
+    }
+
+
+    public function DeleteSubCategory($id)
+    {
+
+        Subcategory::findOrFail($id)->delete();
+        $notification = array(
+            'message' => 'SubCategory Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+
+    }
 
 
 
-     }
+}
 
 

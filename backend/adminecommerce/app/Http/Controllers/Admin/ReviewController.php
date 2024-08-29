@@ -47,11 +47,21 @@ class ReviewController extends Controller
         }
     }
 
-    public function GetAllReview(){
+    public function GetAllReview(Request $request) {
+        $query = ProductReviews::query();
 
-        $review = ProductReviews::latest()->get();
-       return view('backend.review.review_all', compact('review'));
-   }
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('product_name', 'LIKE', "%$search%")
+                  ->orWhere('reviewer_name', 'LIKE', "%$search%")
+                  ->orWhere('reviewer_comments', 'LIKE', "%$search%");
+        }
+
+        $reviews = $query->latest()->paginate(10);
+
+        return view('backend.review.review_all', compact('reviews'));
+    }
+
    public function DeleteReview($id){
 
     ProductReviews::findOrFail($id)->delete();

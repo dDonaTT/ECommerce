@@ -9,10 +9,17 @@
                     <div>
                         <h5 class="mb-0">All Users</h5>
                     </div>
-                    <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+                    <div class="font-22 ms-auto">
+                        <i class="bx bx-dots-horizontal-rounded"></i>
                     </div>
                 </div>
                 <hr>
+                <form action="{{ route('all.user') }}" method="GET" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search by Name, Email, or Role" value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table align-middle mb-0">
                         <thead class="table-light">
@@ -47,6 +54,7 @@
         </div>
     </div>
 </div>
+
 @if(Session::has('success'))
 <script>
     toastr.success('{{ Session::get('success') }}');
