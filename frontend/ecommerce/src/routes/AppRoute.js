@@ -24,6 +24,7 @@ import OrderListPage from "../pages/OrderListPage";
 import ProtectedRoute from "./ProtectedRoute";
 import CartOrderPage from "../pages/CartOrderPage";
 import NewArrival from "../components/home/NewArrival";
+import Success from "../components/cart/Success";
 
 class AppRoute extends Component {
   constructor() {
@@ -86,6 +87,7 @@ class AppRoute extends Component {
             />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/whats-new" element={<NewArrival />} />
+            <Route path="/checkout/success" element={<Success/>}/>
 
             <Route path="/purchase" element={<PurchasePage />} />
             <Route path="/privacy" element={<PrivacyPage />} />

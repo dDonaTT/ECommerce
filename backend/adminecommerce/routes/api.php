@@ -4,6 +4,9 @@ use App\Http\Controllers\Admin\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\OrderController;
+
+
 // use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductListController;
 use App\Http\Controllers\Admin\ProductCartController;
@@ -19,6 +22,8 @@ use App\Http\Controllers\Admin\FavouriteController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+Route::post('/create-checkout-session', [OrderController::class, 'createCheckoutSession']);
+
 
 
 /////////////// User Login API Start ////////////////////////

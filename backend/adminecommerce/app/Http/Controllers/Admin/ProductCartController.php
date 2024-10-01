@@ -136,7 +136,6 @@ class ProductCartController extends Controller
                     'name' => $name,
                     'payment_method' => $payment_method,
                     'delivery_method' => $delivery_method,
-
                     'delivery_address' => $delivery_address,
                     'city' => $city,
                     'delivery_charge' => $delivery_charge,

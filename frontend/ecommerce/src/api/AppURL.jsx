@@ -23,7 +23,7 @@ class AppURL {
   static OrderListByUser(email) {
     return this.BaseURL + "/orderlistbyuser/" + email;
   }
-
+  static CreateCheckoutSession = this.BaseURL + "/create-checkout-session";
   static UserLogin = this.BaseURL + "/login";
   static UserData = this.BaseURL + "/user";
   static UserRegister = this.BaseURL + "/register";

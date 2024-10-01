@@ -3,7 +3,12 @@ import cogoToast from "cogo-toast";
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import AppURL from "../../api/AppURL";
-import { Navigate, useNavigate } from "react-router";
+import { loadStripe } from "@stripe/stripe-js";
+import { Navigate } from "react-router";
+
+const stripePromise = loadStripe(
+  "pk_test_51Q52gcCKzKHKlfT1rHUbtk92Mxnqwra0ALzTkS7xADJoxncWvnbupTfvNQdUZK66RRI5LpFhTXMPRLdkF63IETwg00UyADSyrD"
+);
 
 class CartOrder extends Component {
   constructor(props) {
@@ -35,7 +40,21 @@ class CartOrder extends Component {
     this.setState({ [name]: value });
   };
 
-  confirmOnClick = () => {
+  saveOrder = async (formData) => {
+    try {
+      const orderResponse = await axios.post(AppURL.CartOrder, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return orderResponse.data;
+    } catch (error) {
+      console.error('Error saving order:', error.response ? error.response.data : error);
+      return null; 
+    }
+  };
+
+  confirmOnClick = async () => {
     const { city, payment, delivery, name, address, email } = this.state;
 
     if (!city || !payment || !name || !address) {
@@ -44,38 +63,73 @@ class CartOrder extends Component {
       });
       return;
     }
-    const invoice = new Date().getTime();
-    const MyFormData = new FormData();
-    MyFormData.append("city", city);
-    MyFormData.append("payment_method", payment);
-    MyFormData.append("delivery_method", delivery);
-    MyFormData.append("name", name);
-    MyFormData.append("delivery_address", address);
-    MyFormData.append("email", email);
-    MyFormData.append("invoice_no", invoice);
-    MyFormData.append("delivery_charge", "00");
 
-    axios
-      .post(AppURL.CartOrder, MyFormData)
-      .then((response) => {
-        if (response.data.status === 1) {
+    const invoice = new Date().getTime();
+    const formData = new FormData();
+
+  
+    formData.append("city", city);
+    formData.append("payment_method", payment);
+    formData.append("delivery_method", delivery);
+    formData.append("name", name);
+    formData.append("delivery_address", address);
+    formData.append("email", email);
+    formData.append("invoice_no", invoice);
+    formData.append("delivery_charge", "00");
+
+    try {
+      if (payment === "Card") {
+       
+        const stripe = await stripePromise;
+
+        const response = await axios.post(AppURL.CreateCheckoutSession, {
+          amount: 400, 
+        });
+
+        const sessionId = response.data.id;
+
+        const result = await stripe.redirectToCheckout({
+          sessionId: sessionId,
+        });
+
+        if (result.error) {
+          cogoToast.error("Stripe Checkout failed", {
+            position: "top-right",
+          });
+        } else {
+          const orderResponse = await this.saveOrder(formData);
+          if (orderResponse && orderResponse.status === 1) {
+            cogoToast.success("Order placed successfully", {
+              position: "top-right",
+            });
+            this.setState({ redirectToOrderList: true });
+          } else {
+            cogoToast.error("Order placement failed. Try again", {
+              position: "top-right",
+            });
+          }
+        }
+      } else {
+        
+        const orderResponse = await this.saveOrder(formData);
+        if (orderResponse && orderResponse.status === 1) {
           cogoToast.success("Order placed successfully", {
             position: "top-right",
           });
-
           this.setState({ redirectToOrderList: true });
         } else {
           cogoToast.error("Order placement failed. Try again", {
             position: "top-right",
           });
         }
-      })
-      .catch((error) => {
-        cogoToast.error("Error placing order", { position: "top-right" });
-        console.error("Error placing order:", error);
+      }
+    } catch (error) {
+      cogoToast.error("Error placing order", {
+        position: "top-right",
       });
+      console.error('Error placing order:', error.response ? error.response.data : error);
+    }
   };
-
   render() {
     const { isLoading } = this.state;
     if (isLoading) {
